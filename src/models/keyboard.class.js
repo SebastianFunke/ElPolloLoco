@@ -5,6 +5,7 @@ class Keyboard {
     UP = false;
     DOWN = false;
     SPACE = false;
+    M = false;
 
     setKeyPressed(keyCode) {
         switch (keyCode['key']) {
@@ -19,6 +20,9 @@ class Keyboard {
                 break;
             case 'ArrowRight':
                 this.RIGHT = true;
+                break;
+            case 'm':
+                this.M = true;
                 break;
             case ' ':
                 this.SPACE = true;
@@ -44,6 +48,10 @@ class Keyboard {
             case ' ':
                 this.SPACE = false;
                 break;
+            case 'm':
+                this.M = false;
+                break;
+
         }
     }
 
@@ -59,6 +67,8 @@ class Keyboard {
                 return this.RIGHT;
             case 'space':
                 return this.SPACE;
+            case 'm':
+                return this.M;
             default:
                 console.log('keyboard.class.js - unknown key: ', key);
                 return false;

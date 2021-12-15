@@ -26,7 +26,7 @@ class World {
         this.draw();
         this.checkBgMove();
         this.drawClouds();
-
+        this.checkColissions();
     }
 
 
@@ -78,6 +78,11 @@ class World {
         });
     }
 
+
+
+
+
+
     drawClouds() {
         setInterval(() => {
             this.cloudObjects.forEach(cloud => {
@@ -98,7 +103,18 @@ class World {
         return this.maxSpeed;
     }
 
+    checkColissions() {
+        setInterval(() => {
+            this.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.energy -= 10;
+                };
+            });
 
+
+
+        }, 100);
+    }
 
     drawCharacter() {
 
@@ -133,29 +149,30 @@ class World {
 
 
 
+            if (!this.character.isDead()) {
+                if (!this.character.checkBothDirectionKeysPressed()) {
+                    if (this.character.rightEnd && keyboard.getPressedKey('right')) {
+                        this.endBoss.moveLeft();
 
-            if (!this.character.checkBothDirectionKeysPressed()) {
-                if (this.character.rightEnd && keyboard.getPressedKey('right')) {
-                    this.endBoss.moveLeft();
 
+                        this.enemies.forEach(enemy => {
+                            enemy.setAdditionalSpeed(this.maxSpeed);
+                        });
+                        this.backgroundObjects.forEach(object => {
+                            object.moveBgLeft(this.canvas.width, this.maxSpeed);
+                        });
+                    }
+                    if (this.character.leftEnd && keyboard.getPressedKey('left')) {
+                        this.endBoss.moveRight();
+                        this.enemies.forEach(enemy => {
+                            enemy.setAdditionalSpeed(this.maxSpeed * -1);
+                        });
+                        this.backgroundObjects.forEach(object => {
+                            object.moveBgRight(this.canvas.width, this.maxSpeed);
+                        });
+                    }
 
-                    this.enemies.forEach(enemy => {
-                        enemy.setAdditionalSpeed(this.maxSpeed);
-                    });
-                    this.backgroundObjects.forEach(object => {
-                        object.moveBgLeft(this.canvas.width, this.maxSpeed);
-                    });
                 }
-                if (this.character.leftEnd && keyboard.getPressedKey('left')) {
-                    this.endBoss.moveRight();
-                    this.enemies.forEach(enemy => {
-                        enemy.setAdditionalSpeed(this.maxSpeed * -1);
-                    });
-                    this.backgroundObjects.forEach(object => {
-                        object.moveBgRight(this.canvas.width, this.maxSpeed);
-                    });
-                }
-
             }
         }, 1000 / 60);
 

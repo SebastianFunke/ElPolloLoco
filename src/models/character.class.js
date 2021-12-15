@@ -5,11 +5,14 @@ class Character extends MovableObject {
     lookDirection = true;
     leftEnd = false;
     rightEnd = false;
+    deadImgPosition = 0;
     moveImages = [];
     idleImages = [];
     longIdleImages = [];
     jumpImagesUp = [];
     jumpImagesFall = [];
+    hurtImages = [];
+    deadImages = [];
     moveImgCache = [
         "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png",
         "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-22.png",
@@ -57,6 +60,21 @@ class Character extends MovableObject {
         "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-38.png",
         "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-39.png"
     ];
+    hurtImagesCache = [
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-41.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-42.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-43.png",
+
+    ];
+    deadImagesCache = [
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-51.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-52.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-53.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-54.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-55.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-56.png",
+
+    ];
     constructor(canvasWidth, speed) {
         super().loadImage("src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png")
         this.moveImages = this.loadImages(this.moveImgCache);
@@ -64,6 +82,8 @@ class Character extends MovableObject {
         this.longIdleImages = this.loadImages(this.longIdleImgCache);
         this.jumpImagesUp = this.loadImages(this.jumpImageUpCache);
         this.jumpImagesFall = this.loadImages(this.jumpImagesFallCache);
+        this.hurtImages = this.loadImages(this.hurtImagesCache);
+        this.deadImages = this.loadImages(this.deadImagesCache);
         this.canvasWidth = canvasWidth;
         this.x = 320;
         this.y = 250;
@@ -81,24 +101,33 @@ class Character extends MovableObject {
     main() {
 
         setInterval(() => {
-            if (this.isInAir() && this.speedY <= 0) {
-                this.displayJumpUp();
-            } else if (this.isInAir() && this.speedY > 0) {
-                this.displayJumpFall();
-            } else {
-
-                if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
-
-                    if (this.checkBothDirectionKeysPressed()) {
-                        this.displayIdle();
-                    } else {
-                        this.displayMove();
-                    }
-
+            if (!this.isDead()) {
+                console.log('over zero');
+                if (this.isInAir() && this.speedY <= 0) {
+                    this.displayJumpUp();
+                } else if (this.isInAir() && this.speedY > 0) {
+                    this.displayJumpFall();
+                } else if (keyboard.getPressedKey('m')) {
+                    this.displayHurt();
                 } else {
-                    this.displayIdle();
+
+                    if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
+
+                        if (this.checkBothDirectionKeysPressed()) {
+                            this.displayIdle();
+                        } else {
+                            this.displayMove();
+                        }
+
+                    } else {
+                        this.displayIdle();
+                    }
                 }
+            } else {
+                console.log('below zero');
+                this.displayDead();
             }
+
             this.increaseImgPosition();
         }, 100);
 
@@ -120,7 +149,10 @@ class Character extends MovableObject {
             this.img = this.longIdleImages[this.imgPosition % this.longIdleImages.length];
         }
     }
+    displayHurt() {
+        this.img = this.hurtImages[this.imgPosition % this.hurtImages.length];
 
+    }
     displayJumpUp() {
         this.img = this.jumpImagesUp[this.jumpImgUpPosition];
         if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
@@ -152,6 +184,18 @@ class Character extends MovableObject {
             this.idleTimerCount = 0;
 
         }
+    }
+
+    displayDead() {
+
+        setInterval(() => {
+            this.img = this.deadImages[this.deadImgPosition];
+            this.y += this.deadJumpHeight;
+            this.deadJumpHeight += 2;
+
+            if (this.deadImgPosition < this.deadImages.length - 1) { this.deadImgPosition++ };
+        }, 100);
+
     }
 
     increaseImgPosition() {
