@@ -3,23 +3,29 @@ class World {
     character;
     enemies = [];
     clouds = [];
+    endBoss;
     backgroundObjects = [];
+    cloudObjects = [];
     ctx;
     canvas;
     maxSpeed = 8;
+    speedBgLayerFour = this.maxSpeed / 4;
+
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        var scale = 3;
-        canvas.width = 720 * scale;
-        canvas.height = 576 * scale;
+        console.log(properties.width);
+        canvas.width = properties.width * properties.scale;
+        canvas.height = properties.height * properties.scale;
         this.setCharacter();
         this.setBackgroundObjects();
         this.setEnemies();
+        this.setClouds();
+        this.setEndBoss();
         this.draw();
         this.checkBgMove();
-
+        this.drawClouds();
 
     }
 
@@ -28,35 +34,20 @@ class World {
         this.character = new Character(this.canvas.width, this.maxSpeed);
     }
     setBackgroundObjects() {
-        this.backgroundObjects = [
-            new Background('src/img/5.Fondo/Capas/5.cielo_1920-1080px.png', 0, 0, 0),
-            new Background('src/img/5.Fondo/Capas/4.nubes/1.png', 0, 0, this.maxSpeed / 4),
-            new Background('src/img/5.Fondo/Capas/4.nubes/2.png', this.canvas.width, 0, this.maxSpeed / 4),
-            new Background('src/img/5.Fondo/Capas/3.Fondo3/1.png', 0, 0, this.maxSpeed / 3),
-            new Background('src/img/5.Fondo/Capas/3.Fondo3/2.png', this.canvas.width, 0, this.maxSpeed / 3),
-            new Background('src/img/5.Fondo/Capas/2.Fondo2/1.png', 0, 0, this.maxSpeed / 2),
-            new Background('src/img/5.Fondo/Capas/2.Fondo2/2.png', this.canvas.width, 0, this.maxSpeed / 2),
-            new Background('src/img/5.Fondo/Capas/1.suelo-fondo1/1.png', 0, 0, this.maxSpeed),
-            new Background('src/img/5.Fondo/Capas/1.suelo-fondo1/2.png', this.canvas.width, 0, this.maxSpeed)
-        ];
+        this.backgroundObjects = level1.backgroundObjects;
+    }
 
-
+    setClouds() {
+        this.cloudObjects = level1.clouds;
     }
 
     setEnemies() {
-        this.enemies = [
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-            new Chicken(this.canvas.width, this.maxSpeed),
-
-        ]
+        this.enemies = level1.enemies;
     }
 
+    setEndBoss() {
+        this.endBoss = new EndBoss();
+    }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -64,12 +55,21 @@ class World {
         this.backgroundObjects.forEach(backgroundObject => {
             this.ctx.drawImage(backgroundObject.img, backgroundObject.x, 0, this.canvas.width, this.canvas.height);
         });
-        this.enemies.forEach(enemy => {
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+
+        this.cloudObjects.forEach(cloud => {
+            this.ctx.drawImage(cloud.img, cloud.x, 0, this.canvas.width, this.canvas.height);
         });
 
+        this.enemies.forEach(enemy => {
+            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+            enemy.drawBorder(this.ctx);
+        });
 
+        this.drawEndBoss();
         this.drawCharacter();
+
+
+
 
         let self = this;
         requestAnimationFrame(function() {
@@ -77,6 +77,27 @@ class World {
 
         });
     }
+
+    drawClouds() {
+        setInterval(() => {
+            this.cloudObjects.forEach(cloud => {
+                cloud.moveCloudLeft(this.canvas.width, this.speedBgLayerFour);
+            });
+        }, 1000 / 60);
+    }
+
+    getHeight() {
+        return this.canvas.height;
+    }
+
+    getWidth() {
+        return this.canvas.width;
+    }
+
+    getMaxSpeed() {
+        return this.maxSpeed;
+    }
+
 
 
     drawCharacter() {
@@ -90,15 +111,18 @@ class World {
         }
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
 
+        this.character.drawBorder(this.ctx);
+
         if (!this.character.lookDirection) {
             this.character.x = this.character.x * -1;
             this.ctx.restore();
         }
-
-
-
     }
 
+    drawEndBoss() {
+        this.ctx.drawImage(this.endBoss.img, this.endBoss.x, this.endBoss.y, this.endBoss.width, this.endBoss.height);
+        this.endBoss.drawBorder(this.ctx);
+    }
     checkBgMove() {
         setInterval(() => {
 
@@ -110,23 +134,28 @@ class World {
 
 
 
-            if (this.character.rightEnd && keyboard.getPressedKey('right')) {
-                this.enemies.forEach(enemy => {
-                    enemy.setAdditionalSpeed(this.maxSpeed);
-                });
-                this.backgroundObjects.forEach(object => {
-                    object.moveBgLeft(this.canvas.width);
-                });
+            if (!this.character.checkBothDirectionKeysPressed()) {
+                if (this.character.rightEnd && keyboard.getPressedKey('right')) {
+                    this.endBoss.moveLeft();
 
 
-            }
-            if (this.character.leftEnd && keyboard.getPressedKey('left')) {
-                this.enemies.forEach(enemy => {
-                    enemy.setAdditionalSpeed(this.maxSpeed * -1);
-                });
-                this.backgroundObjects.forEach(object => {
-                    object.moveBgRight(this.canvas.width);
-                });
+                    this.enemies.forEach(enemy => {
+                        enemy.setAdditionalSpeed(this.maxSpeed);
+                    });
+                    this.backgroundObjects.forEach(object => {
+                        object.moveBgLeft(this.canvas.width, this.maxSpeed);
+                    });
+                }
+                if (this.character.leftEnd && keyboard.getPressedKey('left')) {
+                    this.endBoss.moveRight();
+                    this.enemies.forEach(enemy => {
+                        enemy.setAdditionalSpeed(this.maxSpeed * -1);
+                    });
+                    this.backgroundObjects.forEach(object => {
+                        object.moveBgRight(this.canvas.width, this.maxSpeed);
+                    });
+                }
+
             }
         }, 1000 / 60);
 

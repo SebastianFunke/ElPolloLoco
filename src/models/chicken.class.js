@@ -8,9 +8,9 @@ class Chicken extends MovableObject {
     ];
 
 
-    constructor(canvasWidth, maxSpeed) {
+    constructor() {
         super().loadImage("src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.png")
-        this.canvasWidth = canvasWidth;
+        this.canvasWidth = properties.width * properties.scale;
         this.moveImages = this.loadImages(this.imgCache);
         this.speed = 2 + (3 * Math.random());
         this.x = this.canvasWidth * Math.random() + this.canvasWidth;
@@ -19,7 +19,6 @@ class Chicken extends MovableObject {
         this.width = 200;
         this.move();
         this.animate();
-        this.maxSpeed = maxSpeed;
     }
 
 

@@ -1,23 +1,24 @@
 class Background extends MovableObject {
 
-    constructor(imagePath, x, y, speed) {
+    constructor(imagePath, xMultiplier, y, multiplier) {
         super().loadImage(imagePath);
-        this.speed = Math.round(speed);
+        this.multiplier = multiplier
         this.y = y;
-        this.x = x;
+        this.x = properties.width * properties.scale * xMultiplier;
+
     }
 
-    moveBgLeft(canvasWidth) {
-        this.x -= this.speed;
+    moveBgLeft(canvasWidth, speed) {
+        this.x -= speed * this.multiplier;
         if (this.x < canvasWidth * -1) {
-            this.x = canvasWidth - this.speed;
+            this.x = canvasWidth - speed * this.multiplier;
         }
     }
 
-    moveBgRight(canvasWidth) {
-        this.x += this.speed;
+    moveBgRight(canvasWidth, speed) {
+        this.x += speed * this.multiplier;
         if (this.x > canvasWidth) {
-            this.x = 0 - canvasWidth + this.speed;
+            this.x = 0 - canvasWidth + speed * this.multiplier;
         }
     }
 

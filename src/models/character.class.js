@@ -1,4 +1,5 @@
 class Character extends MovableObject {
+    isMoving = false;
     idleTimer = 30;
     idleTimerCount = 0;
     lookDirection = true;
@@ -7,6 +8,8 @@ class Character extends MovableObject {
     moveImages = [];
     idleImages = [];
     longIdleImages = [];
+    jumpImagesUp = [];
+    jumpImagesFall = [];
     moveImgCache = [
         "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png",
         "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-22.png",
@@ -41,83 +44,156 @@ class Character extends MovableObject {
         "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-20.png",
 
     ];
+    jumpImageUpCache = [
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-31.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-32.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-33.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-34.png"
+    ];
+    jumpImagesFallCache = [
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-35.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-36.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-37.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-38.png",
+        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-39.png"
+    ];
     constructor(canvasWidth, speed) {
         super().loadImage("src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png")
         this.moveImages = this.loadImages(this.moveImgCache);
         this.idleImages = this.loadImages(this.idleImgCache);
         this.longIdleImages = this.loadImages(this.longIdleImgCache);
+        this.jumpImagesUp = this.loadImages(this.jumpImageUpCache);
+        this.jumpImagesFall = this.loadImages(this.jumpImagesFallCache);
         this.canvasWidth = canvasWidth;
         this.x = 320;
-        this.y = 850;
+        this.y = 250;
         this.height = 700;
         this.width = 350;
         this.speed = speed;
         this.main();
-        console.log(this.idleImages);
-        console.log(this.img);
+        this.applyGravity();
     }
 
-    jump() {
 
-
-
-
-    }
 
 
 
     main() {
 
         setInterval(() => {
-            if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
-                this.img = this.moveImages[this.imgPosition % this.moveImages.length];
-                this.idleTimerCount = 0;
+            if (this.isInAir() && this.speedY <= 0) {
+                this.displayJumpUp();
+            } else if (this.isInAir() && this.speedY > 0) {
+                this.displayJumpFall();
             } else {
-                this.idleTimerCount++;
-                if (this.idleTimerCount <= this.idleTimer) {
-                    this.img = this.idleImages[this.imgPosition % this.idleImages.length];
+
+                if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
+
+                    if (this.checkBothDirectionKeysPressed()) {
+                        this.displayIdle();
+                    } else {
+                        this.displayMove();
+                    }
+
                 } else {
-                    this.img = this.longIdleImages[this.imgPosition % this.longIdleImages.length];
+                    this.displayIdle();
                 }
             }
-            this.imgPosition++;
+            this.increaseImgPosition();
         }, 100);
 
         setInterval(() => {
-            this.checkCharacterEnd();
-            this.checkDirectionKeys();
+            this.checkCharacterEndRight();
+            this.checkCharacterEndLeft();
+            this.checkKeyRight();
+            this.checkKeyLeft();
+            this.checkResetIdle();
         }, 1000 / 60);
     }
 
-    displayIdle() {
 
+    displayIdle() {
+        this.idleTimerCount++;
+        if (this.idleTimerCount <= this.idleTimer) {
+            this.img = this.idleImages[this.imgPosition % this.idleImages.length];
+        } else {
+            this.img = this.longIdleImages[this.imgPosition % this.longIdleImages.length];
+        }
     }
 
-    checkDirectionKeys() {
-        if (keyboard.getPressedKey('left')) {
-            if (!this.leftEnd) {
-                this.lookDirection = false;
-                this.x -= this.speed;
-            }
-        }
+    displayJumpUp() {
+        this.img = this.jumpImagesUp[this.jumpImgUpPosition];
+        if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
+            this.jumpImgUpPosition++;
+        } else {
+            this.jumpImgFallPosition = 0;
+        };
+    }
 
-        if (keyboard.getPressedKey('right')) {
+
+
+    displayJumpFall() {
+        this.img = this.jumpImagesFall[this.jumpImgFallPosition];
+        if (this.y > (this.ground + this.jumpHeight) / 2) {
+            if (this.jumpImgFallPosition < this.jumpImagesFall.length - 1) {
+                this.jumpImgFallPosition++;
+            }
+        } else {
+            this.jumpImgUpPosition = 0;
+        }
+    }
+
+    displayMove() {
+        this.img = this.moveImages[this.imgPosition % this.moveImages.length];
+    }
+
+    checkResetIdle() {
+        if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
+            this.idleTimerCount = 0;
+
+        }
+    }
+
+    increaseImgPosition() {
+        this.imgPosition++;
+    }
+
+
+
+    checkBothDirectionKeysPressed() {
+        if (keyboard.getPressedKey('right') && keyboard.getPressedKey('left')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    checkKeyRight() {
+        if (keyboard.getPressedKey('right') && !this.checkBothDirectionKeysPressed()) {
             if (!this.rightEnd) {
                 this.x += this.speed;
                 this.lookDirection = true;
             }
         }
-
     }
 
-
-    checkCharacterEnd() {
-        if (this.x > this.canvasWidth / 2) {
+    checkKeyLeft() {
+        if (keyboard.getPressedKey('left') && !this.checkBothDirectionKeysPressed()) {
+            if (!this.leftEnd) {
+                this.lookDirection = false;
+                this.x -= this.speed;
+            }
+        }
+    }
+    checkCharacterEndRight() {
+        if (this.x > this.canvasWidth / 3) {
             this.rightEnd = true;
         } else {
             this.rightEnd = false;
         }
+    }
 
+    checkCharacterEndLeft() {
         if (this.x < this.canvasWidth / 18) {
             this.leftEnd = true;
         } else {
