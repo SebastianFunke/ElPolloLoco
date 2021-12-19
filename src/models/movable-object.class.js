@@ -19,7 +19,8 @@ class MovableObject {
     isJumping = false;
     ground = 850;
     energy = 100;
-
+    timePassed = 0;
+    lastHit = 0;
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -67,6 +68,18 @@ class MovableObject {
     }
     isInAir() {
         return this.y < this.ground;
+    }
+
+    hit() {
+        this.energy -= 10;
+        this.lastHit = new Date().getTime();
+        this.lastHit = this.lastHit / 1000;
+    }
+
+    isHitted() {
+        this.timePassed = (new Date().getTime() / 1000) - this.lastHit;
+        console.log(this.timePassed);
+        return this.timePassed < 1.5;
     }
 
     getLeft() {

@@ -15,7 +15,6 @@ class World {
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        console.log(properties.width);
         canvas.width = properties.width * properties.scale;
         canvas.height = properties.height * properties.scale;
         this.setCharacter();
@@ -107,7 +106,8 @@ class World {
         setInterval(() => {
             this.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    this.character.energy -= 10;
+                    this.character.hit();
+
                 };
             });
 

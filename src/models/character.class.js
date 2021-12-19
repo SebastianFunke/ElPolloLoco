@@ -102,13 +102,12 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (!this.isDead()) {
-                console.log('over zero');
-                if (this.isInAir() && this.speedY <= 0) {
+                if (this.isHitted()) {
+                    this.displayHurt();
+                } else if (this.isInAir() && this.speedY <= 0) {
                     this.displayJumpUp();
                 } else if (this.isInAir() && this.speedY > 0) {
                     this.displayJumpFall();
-                } else if (keyboard.getPressedKey('m')) {
-                    this.displayHurt();
                 } else {
 
                     if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
@@ -194,7 +193,7 @@ class Character extends MovableObject {
             this.deadJumpHeight += 2;
 
             if (this.deadImgPosition < this.deadImages.length - 1) { this.deadImgPosition++ };
-        }, 100);
+        }, 1000 / 25);
 
     }
 
