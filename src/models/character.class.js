@@ -94,10 +94,6 @@ class Character extends MovableObject {
         this.applyGravity();
     }
 
-
-
-
-
     main() {
 
         setInterval(() => {
@@ -123,7 +119,6 @@ class Character extends MovableObject {
                     }
                 }
             } else {
-                console.log('below zero');
                 this.displayDead();
             }
 
@@ -191,7 +186,6 @@ class Character extends MovableObject {
             this.img = this.deadImages[this.deadImgPosition];
             this.y += this.deadJumpHeight;
             this.deadJumpHeight += 2;
-
             if (this.deadImgPosition < this.deadImages.length - 1) { this.deadImgPosition++ };
         }, 1000 / 25);
 

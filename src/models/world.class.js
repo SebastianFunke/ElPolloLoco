@@ -6,6 +6,7 @@ class World {
     endBoss;
     backgroundObjects = [];
     cloudObjects = [];
+    statusBar;
     ctx;
     canvas;
     maxSpeed = 8;
@@ -22,10 +23,12 @@ class World {
         this.setEnemies();
         this.setClouds();
         this.setEndBoss();
+        this.setStatusBar();
         this.draw();
         this.checkBgMove();
         this.drawClouds();
         this.checkColissions();
+
     }
 
 
@@ -47,6 +50,10 @@ class World {
     setEndBoss() {
         this.endBoss = new EndBoss();
     }
+
+    setStatusBar() {
+        this.statusBar = new StatusBar(this.canvas.width);
+    }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -66,7 +73,7 @@ class World {
 
         this.drawEndBoss();
         this.drawCharacter();
-
+        this.drawLifeBar();
 
 
 
@@ -89,6 +96,8 @@ class World {
             });
         }, 1000 / 60);
     }
+
+
 
     getHeight() {
         return this.canvas.height;
@@ -139,6 +148,13 @@ class World {
         this.ctx.drawImage(this.endBoss.img, this.endBoss.x, this.endBoss.y, this.endBoss.width, this.endBoss.height);
         this.endBoss.drawBorder(this.ctx);
     }
+
+    drawLifeBar() {
+        this.ctx.drawImage(this.statusBar.img, this.statusBar.x, this.statusBar.y, this.statusBar.width, this.statusBar.height);
+        this.statusBar.setImg(this.character.energy);
+    }
+
+
     checkBgMove() {
         setInterval(() => {
 

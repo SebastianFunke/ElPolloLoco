@@ -1,16 +1,10 @@
-class MovableObject {
+class MovableObject extends DrawableObject {
     maxSpeed;
-    canvasWidth;
-    imgPosition = 0;
+
+
     jumpImgUpPosition = 0;
     jumpImgFallPosition = 0;
-    x;
-    y;
-    img;
-    height;
-    width;
-    imageCache = [];
-    imageArray = [];
+
     speed = 2;
     jumpHeight = -80;
     speedY = 0;
@@ -18,26 +12,14 @@ class MovableObject {
     acceleration = 6;
     isJumping = false;
     ground = 850;
-    energy = 100;
+    energy;
     timePassed = 0;
     lastHit = 0;
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
 
 
-
-    loadImages(arr) {
-        this.imageArray = [];
-        arr.forEach(element => {
-            let i = new Image();
-            i.src = element;
-            this.imageArray.push(i);
-        });
-        return this.imageArray
-
-
+    constructor() {
+        super();
+        this.energy = properties.characterEnergy;
     }
 
 
@@ -64,7 +46,9 @@ class MovableObject {
         }, 1000 / 25);
     }
     isDead() {
+        console.log(this.energy);
         return this.energy < 1;
+
     }
     isInAir() {
         return this.y < this.ground;
@@ -78,42 +62,12 @@ class MovableObject {
 
     isHitted() {
         this.timePassed = (new Date().getTime() / 1000) - this.lastHit;
-        console.log(this.timePassed);
         return this.timePassed < 1.5;
     }
 
-    getLeft() {
 
 
-        return this.x;
-    }
 
-    getTop() {
-
-
-        return this.y;
-    }
-
-    getRight() {
-
-
-        return this.x + this.width;
-    }
-
-    getBottom() {
-
-
-        return this.y + this.height;
-    }
-
-
-    drawBorder(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle = "red";
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
 
     isColliding(mo) {
         return this.x + this.width > mo.x &&
