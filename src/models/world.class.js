@@ -18,6 +18,8 @@ class World {
         this.canvas = canvas;
         canvas.width = properties.width * properties.scale;
         canvas.height = properties.height * properties.scale;
+        canvas.style.width = properties.width + 'px';
+        canvas.style.height = properties.height + 'px';
         this.setCharacter();
         this.setBackgroundObjects();
         this.setEnemies();
@@ -52,8 +54,10 @@ class World {
     }
 
     setStatusBar() {
-        this.statusBar = new StatusBar(this.canvas.width);
+        this.statusBar = new StatusBar();
     }
+
+    //TODO draw function move to drawable object
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -151,7 +155,7 @@ class World {
 
     drawLifeBar() {
         this.ctx.drawImage(this.statusBar.img, this.statusBar.x, this.statusBar.y, this.statusBar.width, this.statusBar.height);
-        this.statusBar.setImg(this.character.energy);
+        this.statusBar.setLifeImg(this.character.energy);
     }
 
 

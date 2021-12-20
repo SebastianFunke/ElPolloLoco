@@ -20,6 +20,7 @@ class MovableObject extends DrawableObject {
     constructor() {
         super();
         this.energy = properties.characterEnergy;
+
     }
 
 
@@ -46,7 +47,7 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
     isDead() {
-        console.log(this.energy);
+
         return this.energy < 1;
 
     }

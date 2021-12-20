@@ -7,7 +7,6 @@ class StatusBar extends DrawableObject {
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/60.png",
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/80.png",
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/100.png",
-
     ];
 
 
@@ -16,31 +15,23 @@ class StatusBar extends DrawableObject {
 
 
 
-    constructor(canvasWidth) {
+    constructor() {
         super().loadImage("src/img/7.Marcadores/Barra/Marcador vida/Naranja/100.png");
         this.lifeBarImgs = this.loadImages(this.lifeBarImgsCache);
         this.x = 20;
         this.y = 20;
-        this.height = canvasWidth / 15;
-        this.width = canvasWidth / 5;
+        this.height = properties.width / 7;
+        this.width = properties.width / 2;
     }
 
 
 
-    setImg(actualLife) {
-        if (actualLife > 99) {
-            this.img = this.lifeBarImgs[5];
-        } else if (actualLife <= 99 && actualLife > 70) {
-            this.img = this.lifeBarImgs[4];
-        } else if (actualLife <= 69 && actualLife > 50) {
-            this.img = this.lifeBarImgs[3];
-        } else if (actualLife <= 49 && actualLife > 30) {
-            this.img = this.lifeBarImgs[2];
-        } else if (actualLife <= 29 && actualLife > 10) {
-            this.img = this.lifeBarImgs[1];
-        } else if (actualLife <= 0) {
-            this.img = this.lifeBarImgs[0];
-        }
+    setLifeImg(actualLife) {
+        let imgPosition = Math.round((this.lifeBarImgs.length - 1) / 100 * actualLife)
+        if (imgPosition < 0) {
+            imgPosition = 0
+        };
+        this.img = this.lifeBarImgs[imgPosition];
     }
 
 }

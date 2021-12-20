@@ -4,7 +4,7 @@ class Background extends MovableObject {
         super().loadImage(imagePath);
         this.multiplier = multiplier
         this.y = y;
-        this.x = properties.width * properties.scale * xMultiplier;
+        this.x = properties.width * xMultiplier * properties.scale;
 
     }
 
