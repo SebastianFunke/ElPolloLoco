@@ -11,7 +11,8 @@ class World {
     canvas;
     maxSpeed = 8;
     speedBgLayerFour = this.maxSpeed / 4;
-
+    bottles = [];
+    bottleThrowed = false;
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -26,11 +27,12 @@ class World {
         this.setClouds();
         this.setEndBoss();
         this.setStatusBar();
+        this.setBottle();
         this.draw();
         this.checkBgMove();
         this.drawClouds();
         this.checkColissions();
-
+        this.checkGenerateBottle();
     }
 
 
@@ -54,13 +56,17 @@ class World {
     }
 
     setStatusBar() {
-        // this.statusBar = new StatusBar();
         this.statusBar.push(new StatusBar('life'));
         this.statusBar.push(new StatusBar('bottle'));
         this.statusBar.push(new StatusBar('coin'));
     }
 
-    //TODO draw function move to drawable object
+    setBottle() {
+            //this.bottles.push(new ThrowableObject);
+            //this.bottles.push(new ThrowableObject);
+            //this.bottles.push(new ThrowableObject);
+        }
+        //TODO draw function move to drawable object
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -81,7 +87,7 @@ class World {
         this.drawEndBoss();
         this.drawCharacter();
         this.drawStatusBars();
-
+        this.drawBottle();
 
 
         let self = this;
@@ -161,9 +167,21 @@ class World {
         this.statusBar.forEach(element => {
             element.setImg(this.character.energy, this.character.bottles, this.character.coins);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
-
         });
+    }
 
+    drawBottle() {
+
+        this.bottles.forEach(function(item, index, object) {
+            if (item.energy <= 0) {
+                object.splice(index, 1);
+            }
+        })
+
+
+        this.bottles.forEach(element => {
+            this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
+        });
 
     }
 
@@ -205,6 +223,19 @@ class World {
             }
         }, 1000 / 60);
 
+    }
+
+    checkGenerateBottle() {
+        setInterval(() => {
+            if (keyboard.getPressedKey('d') && !this.bottleThrowed) {
+                this.bottles.push(new ThrowableObject(this.character.x + (this.character.width / 6), this.character.y + (this.character.height / 3), this.character.lookDirection));
+                this.bottleThrowed = true;
+
+            }
+            if (!keyboard.getPressedKey('d') && this.bottleThrowed) {
+                this.bottleThrowed = false;
+            }
+        }, 1000 / 60);
     }
 
 

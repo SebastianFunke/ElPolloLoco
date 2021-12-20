@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     speed = 2;
     jumpHeight = -80;
     speedY = 0;
+    speedX = 80;
     deadJumpHeight = -40;
     acceleration = 6;
     isJumping = false;

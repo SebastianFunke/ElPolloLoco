@@ -5,7 +5,7 @@ class StatusBar extends DrawableObject {
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/40.png",
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/60.png",
         "src/img/7.Marcadores/Barra/Marcador vida/Naranja/80.png",
-        "src/img/7.Marcadores/Barra/Marcador vida/Naranja/100.png",
+        "src/img/7.Marcadores/Barra/Marcador vida/Naranja/100.png"
     ];
 
     bottleBarImgsCache = [
@@ -14,7 +14,7 @@ class StatusBar extends DrawableObject {
         "src/img/7.Marcadores/Barra/Marcador_botella/Azul/40_.png",
         "src/img/7.Marcadores/Barra/Marcador_botella/Azul/60_.png",
         "src/img/7.Marcadores/Barra/Marcador_botella/Azul/80_.png",
-        "src/img/7.Marcadores/Barra/Marcador_botella/Azul/100_.png",
+        "src/img/7.Marcadores/Barra/Marcador_botella/Azul/100_.png"
 
     ];
 
@@ -24,7 +24,7 @@ class StatusBar extends DrawableObject {
         "src/img/7.Marcadores/Barra/Marcador moneda/azul/40_.png",
         "src/img/7.Marcadores/Barra/Marcador moneda/azul/60_.png",
         "src/img/7.Marcadores/Barra/Marcador moneda/azul/80_.png",
-        "src/img/7.Marcadores/Barra/Marcador moneda/azul/100_.png",
+        "src/img/7.Marcadores/Barra/Marcador moneda/azul/100_.png"
     ];
 
     barImgs = [];
@@ -70,7 +70,7 @@ class StatusBar extends DrawableObject {
         } else if (this.type == 'coin') {
             typePercentage = actualCoins;
         }
-        let imgPosition = Math.round((this.barImgs.length - 1) / 100 * typePercentage)
+        let imgPosition = Math.round((this.barImgs.length - 1) / 100 * typePercentage);
         if (imgPosition < 0) {
             imgPosition = 0
         };
