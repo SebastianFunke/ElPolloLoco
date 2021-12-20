@@ -6,7 +6,7 @@ class World {
     endBoss;
     backgroundObjects = [];
     cloudObjects = [];
-    statusBar;
+    statusBar = [];
     ctx;
     canvas;
     maxSpeed = 8;
@@ -54,7 +54,10 @@ class World {
     }
 
     setStatusBar() {
-        this.statusBar = new StatusBar();
+        // this.statusBar = new StatusBar();
+        this.statusBar.push(new StatusBar('life'));
+        this.statusBar.push(new StatusBar('bottle'));
+        this.statusBar.push(new StatusBar('coin'));
     }
 
     //TODO draw function move to drawable object
@@ -77,7 +80,7 @@ class World {
 
         this.drawEndBoss();
         this.drawCharacter();
-        this.drawLifeBar();
+        this.drawStatusBars();
 
 
 
@@ -153,9 +156,15 @@ class World {
         this.endBoss.drawBorder(this.ctx);
     }
 
-    drawLifeBar() {
-        this.ctx.drawImage(this.statusBar.img, this.statusBar.x, this.statusBar.y, this.statusBar.width, this.statusBar.height);
-        this.statusBar.setLifeImg(this.character.energy);
+    drawStatusBars() {
+
+        this.statusBar.forEach(element => {
+            element.setImg(this.character.energy, this.character.bottles, this.character.coins);
+            this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
+
+        });
+
+
     }
 
 

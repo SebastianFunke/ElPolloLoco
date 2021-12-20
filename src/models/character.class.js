@@ -6,6 +6,8 @@ class Character extends MovableObject {
     leftEnd = false;
     rightEnd = false;
     deadImgPosition = 0;
+    coins = 75;
+    bottles = 70;
     moveImages = [];
     idleImages = [];
     longIdleImages = [];
