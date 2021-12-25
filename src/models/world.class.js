@@ -8,6 +8,7 @@ class World {
     cloudObjects = [];
     statusBar = [];
     ctx;
+    coins = [];
     canvas;
     maxSpeed = 8;
     speedBgLayerFour = this.maxSpeed / 4;
@@ -27,6 +28,7 @@ class World {
         this.setClouds();
         this.setEndBoss();
         this.setStatusBar();
+        this.setCoins();
         this.setBottle();
         this.draw();
         this.checkBgMove();
@@ -51,6 +53,10 @@ class World {
         this.enemies = level1.enemies;
     }
 
+    setCoins() {
+        this.coins = level1.coins;
+    }
+
     setEndBoss() {
         this.endBoss = new EndBoss();
     }
@@ -59,6 +65,8 @@ class World {
         this.statusBar.push(new StatusBar('life'));
         this.statusBar.push(new StatusBar('bottle'));
         this.statusBar.push(new StatusBar('coin'));
+        this.statusBar.push(new StatusBar('boss'));
+
     }
 
     setBottle() {
@@ -85,6 +93,7 @@ class World {
         });
 
         this.drawEndBoss();
+        this.drawCoins();
         this.drawCharacter();
         this.drawStatusBars();
         this.drawBottle();
@@ -110,7 +119,11 @@ class World {
         }, 1000 / 60);
     }
 
-
+    drawCoins() {
+        this.coins.forEach(coin => {
+            this.ctx.drawImage(coin.img, coin.x, coin.y, coin.width, coin.height);
+        });
+    }
 
     getHeight() {
         return this.canvas.height;
@@ -129,10 +142,18 @@ class World {
             this.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
-
                 };
             });
 
+            this.bottles.forEach((bottle) => {
+                if (this.endBoss.isColliding(bottle)) {
+                    if (!bottle.hasHitted()) {
+                        this.endBoss.hit();
+                    }
+                    bottle.collides();
+
+                };
+            });
 
 
         }, 100);
@@ -149,7 +170,7 @@ class World {
         }
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
 
-        this.character.drawBorder(this.ctx);
+        //this.character.drawBorder(this.ctx);
 
         if (!this.character.lookDirection) {
             this.character.x = this.character.x * -1;
@@ -159,13 +180,13 @@ class World {
 
     drawEndBoss() {
         this.ctx.drawImage(this.endBoss.img, this.endBoss.x, this.endBoss.y, this.endBoss.width, this.endBoss.height);
-        this.endBoss.drawBorder(this.ctx);
+        //this.endBoss.drawBorder(this.ctx);
     }
 
     drawStatusBars() {
 
         this.statusBar.forEach(element => {
-            element.setImg(this.character.energy, this.character.bottles, this.character.coins);
+            element.setImg(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
         });
     }
@@ -227,13 +248,15 @@ class World {
 
     checkGenerateBottle() {
         setInterval(() => {
-            if (keyboard.getPressedKey('d') && !this.bottleThrowed) {
-                this.bottles.push(new ThrowableObject(this.character.x + (this.character.width / 6), this.character.y + (this.character.height / 3), this.character.lookDirection));
-                this.bottleThrowed = true;
-
-            }
-            if (!keyboard.getPressedKey('d') && this.bottleThrowed) {
-                this.bottleThrowed = false;
+            if (this.character.bottles > 0) {
+                if (keyboard.getPressedKey('d') && !this.bottleThrowed) {
+                    this.bottles.push(new ThrowableObject(this.character.x + (this.character.width / 6), this.character.y + (this.character.height / 3), this.character.lookDirection));
+                    this.character.bottles -= 10;
+                    this.bottleThrowed = true;
+                }
+                if (!keyboard.getPressedKey('d') && this.bottleThrowed) {
+                    this.bottleThrowed = false;
+                }
             }
         }, 1000 / 60);
     }

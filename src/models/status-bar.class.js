@@ -27,6 +27,15 @@ class StatusBar extends DrawableObject {
         "src/img/7.Marcadores/Barra/Marcador moneda/azul/100_.png"
     ];
 
+    bossBarLifeCache = [
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/0_.png",
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/20_.png",
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/40_.png",
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/60_.png",
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/80_.png",
+        "src/img/7.Marcadores/Barra/Enemy_gigantón-Doña_Gallinota-vida/100_.png",
+    ];
+
     barImgs = [];
     type;
 
@@ -35,6 +44,8 @@ class StatusBar extends DrawableObject {
 
     constructor(type) {
         super();
+        this.height = properties.height / 3.5;
+        this.width = properties.width / 1.5;
         this.x = 20;
         this.type = type;
         if (type == 'life') {
@@ -46,22 +57,23 @@ class StatusBar extends DrawableObject {
         } else if (type == 'coin') {
             this.barImgs = this.loadImages(this.coinBarImgsCache);
             this.y = 20 + (properties.height / 1.75);
+        } else if (type == 'boss') {
+            this.barImgs = this.loadImages(this.bossBarLifeCache);
+            this.y = 20;
+            this.x = (properties.width * properties.scale) - this.width;
+            console.log('bossBar x: ', this.x);
         }
 
 
 
 
-        //.loadImage("src/img/7.Marcadores/Barra/Marcador vida/Naranja/100.png");
-        //this.barImgs = this.loadImages(this.barImgsCache);
 
-        //this.y = 20;
-        this.height = properties.height / 3.5;
-        this.width = properties.width / 1.5;
+
     }
 
 
 
-    setImg(actualLife, actualBottles, actualCoins) {
+    setImg(actualLife, actualBottles, actualCoins, actualBossLife) {
         let typePercentage;
         if (this.type == 'life') {
             typePercentage = actualLife;
@@ -69,6 +81,8 @@ class StatusBar extends DrawableObject {
             typePercentage = actualBottles;
         } else if (this.type == 'coin') {
             typePercentage = actualCoins;
+        } else if (this.type == 'boss') {
+            typePercentage = actualBossLife;
         }
         let imgPosition = Math.round((this.barImgs.length - 1) / 100 * typePercentage);
         if (imgPosition < 0) {

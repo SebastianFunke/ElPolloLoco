@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-
+    collided = false;
     bottleImgs = [];
     splashImgs = [];
     imgPositionSplash = 0;
@@ -45,7 +45,7 @@ class ThrowableObject extends MovableObject {
 
     rotate() {
         setInterval(() => {
-            if (!this.isInAir()) {
+            if (!this.isInAir() || this.collided) {
                 this.img = this.splashImgs[this.imgPositionSplash];
                 this.imgPositionSplash++;
                 if (this.imgPositionSplash >= this.splashImgs.length) {
@@ -60,7 +60,7 @@ class ThrowableObject extends MovableObject {
 
     throw () {
         setInterval(() => {
-            if (this.isInAir()) {
+            if (this.isInAir() && !this.collided) {
                 this.y -= this.speedY;
                 this.x += this.speedX;
                 this.speedY -= this.acceleration;
@@ -69,4 +69,11 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 20);
     }
 
+    collides() {
+        this.collided = true;
+    }
+
+    hasHitted() {
+        return this.collided;
+    }
 }

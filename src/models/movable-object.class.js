@@ -57,14 +57,31 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 10;
+        console.log(this.energy);
+        if (this instanceof Character) {
+            if (!this.isHitted()) {
+
+                this.energy -= 10;
+                this.setLastHit();
+            }
+
+        } else {
+            this.energy -= 10;
+            this.setLastHit();
+
+        };
+
+
+    }
+
+    setLastHit() {
         this.lastHit = new Date().getTime();
         this.lastHit = this.lastHit / 1000;
     }
 
     isHitted() {
         this.timePassed = (new Date().getTime() / 1000) - this.lastHit;
-        return this.timePassed < 1.5;
+        return this.timePassed < 1;
     }
 
 
