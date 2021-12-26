@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     collidingX;
     collidingheight;
     collidingwidth;
-
+    isHigher = false;
     jumpImgUpPosition = 0;
     jumpImgFallPosition = 0;
 
@@ -35,12 +35,24 @@ class MovableObject extends DrawableObject {
             this.collidingX < mo.collidingX &&
             this.collidingY < mo.collidingY + mo.collidingheight;
 
-
-        /*return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height*/
     }
+
+    isSmashed(mo) {
+        return this.isHigher &&
+            this.collidingX + this.collidingwidth > mo.collidingX &&
+            this.collidingX < mo.collidingX + mo.collidingwidth &&
+            this.collidingY + this.collidingheight > mo.y
+    }
+
+    checkHigher(mo) {
+        if (mo.y > this.y + this.height) {
+            this.isHigher = true;
+        } else {
+            this.isHigher = false;
+        }
+    }
+
+
     applyGravity() {
         setInterval(() => {
             if (!this.isDead()) {
@@ -77,12 +89,12 @@ class MovableObject extends DrawableObject {
         if (this instanceof Character) {
             if (!this.isHitted()) {
 
-                this.energy -= 10;
+                this.energy -= 15;
                 this.setLastHit();
             }
 
         } else {
-            this.energy -= 10;
+            this.energy -= 20;
             this.setLastHit();
 
         };
@@ -115,7 +127,7 @@ class MovableObject extends DrawableObject {
                 this.collidingY = this.y + this.height / 2.6;
                 this.collidingX = this.x;
                 this.collidingwidth = this.width;
-            } else if (this instanceof PickableObject) {
+            } else if (this instanceof PickableCoin) {
                 this.collidingheight = this.height / 3;
                 this.collidingY = this.y + this.height / 3;
                 this.collidingX = this.x + this.width / 3;

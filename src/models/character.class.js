@@ -7,7 +7,7 @@ class Character extends MovableObject {
     rightEnd = false;
     deadImgPosition = 0;
     coins = 0;
-    bottles = 100;
+    bottles = 0;
     moveImages = [];
     idleImages = [];
     longIdleImages = [];
@@ -141,7 +141,11 @@ class Character extends MovableObject {
     addCoin() {
 
         this.coins += 20;
-        console.log(this.coins);
+
+    }
+
+    addBottle() {
+        this.bottles += 10;
     }
 
     displayIdle() {

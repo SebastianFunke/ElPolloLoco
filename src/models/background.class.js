@@ -8,14 +8,14 @@ class Background extends MovableObject {
 
     }
 
-    moveBgLeft(canvasWidth, speed) {
+    moveBgRight(canvasWidth, speed) {
         this.x -= speed * this.multiplier;
         if (this.x < canvasWidth * -1) {
             this.x = canvasWidth - speed * this.multiplier;
         }
     }
 
-    moveBgRight(canvasWidth, speed) {
+    moveBgLeft(canvasWidth, speed) {
         this.x += speed * this.multiplier;
         if (this.x > canvasWidth) {
             this.x = 0 - canvasWidth + speed * this.multiplier;

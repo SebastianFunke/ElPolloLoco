@@ -14,6 +14,7 @@ class World {
     speedBgLayerFour = this.maxSpeed / 4;
     bottles = [];
     bottleThrowed = false;
+    pickableBottles = [];
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -29,7 +30,7 @@ class World {
         this.setEndBoss();
         this.setStatusBar();
         this.setCoins();
-        this.setBottle();
+        this.setBottles();
         this.draw();
         this.checkBgMove();
         this.drawClouds();
@@ -69,12 +70,10 @@ class World {
 
     }
 
-    setBottle() {
-            //this.bottles.push(new ThrowableObject);
-            //this.bottles.push(new ThrowableObject);
-            //this.bottles.push(new ThrowableObject);
-        }
-        //TODO draw function move to drawable object
+    setBottles() {
+        this.pickableBottles = level1.bottles;
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -89,15 +88,16 @@ class World {
 
         this.enemies.forEach(enemy => {
             this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-            enemy.drawBorder(this.ctx);
+            //enemy.drawBorder(this.ctx);
         });
+
 
         this.drawEndBoss();
         this.drawCoins();
         this.drawCharacter();
         this.drawStatusBars();
         this.drawBottle();
-
+        this.drawpickableBottles()
 
         let self = this;
         requestAnimationFrame(function() {
@@ -130,6 +130,19 @@ class World {
         });
     }
 
+    drawpickableBottles() {
+        this.pickableBottles.forEach(pickablebottle => {
+            this.ctx.drawImage(pickablebottle.img, pickablebottle.x, pickablebottle.y, pickablebottle.width, pickablebottle.height);
+
+        });
+        this.pickableBottles.forEach(function(item, index, object) {
+            if (item.energy <= 0) {
+                object.splice(index, 1);
+            }
+        });
+    }
+
+
     getHeight() {
         return this.canvas.height;
     }
@@ -144,8 +157,26 @@ class World {
 
     checkColissions() {
         setInterval(() => {
+
             this.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
+                if (this.character.isSmashed(enemy)) {
+                    enemy.energy = 0;
+                    enemy.setDeadImgs();
+                };
+            });
+
+            this.enemies.forEach((enemy) => {
+                if (this.character.checkHigher(enemy)) {
+                    enemy.isHigher = true;
+                } else {
+                    enemy.isHigher = false;
+                };
+            });
+
+
+
+            this.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy) && enemy.energy > 0) {
                     this.character.hit();
                 };
             });
@@ -164,8 +195,14 @@ class World {
                     coin.energy = 0;
                     this.character.addCoin();
                 }
-            })
+            });
 
+            this.pickableBottles.forEach((pickableBottle) => {
+                if (this.character.isColliding(pickableBottle)) {
+                    pickableBottle.energy = 0;
+                    this.character.addBottle();
+                }
+            });
 
         }, 100);
     }
@@ -235,11 +272,14 @@ class World {
                             enemy.setAdditionalSpeed(this.maxSpeed);
                         });
                         this.backgroundObjects.forEach(object => {
-                            object.moveBgLeft(this.canvas.width, this.maxSpeed);
+                            object.moveBgRight(this.canvas.width, this.maxSpeed);
                         });
 
                         this.coins.forEach(coin => {
                             coin.moveRight(this.maxSpeed);
+                        });
+                        this.pickableBottles.forEach(pickableBottle => {
+                            pickableBottle.moveRight(this.maxSpeed);
                         });
                     }
                     if (this.character.leftEnd && keyboard.getPressedKey('left')) {
@@ -248,10 +288,13 @@ class World {
                             enemy.setAdditionalSpeed(this.maxSpeed * -1);
                         });
                         this.backgroundObjects.forEach(object => {
-                            object.moveBgRight(this.canvas.width, this.maxSpeed);
+                            object.moveBgLeft(this.canvas.width, this.maxSpeed);
                         });
                         this.coins.forEach(coin => {
                             coin.moveLeft(this.maxSpeed);
+                        });
+                        this.pickableBottles.forEach(pickableBottle => {
+                            pickableBottle.moveLeft(this.maxSpeed);
                         });
                     }
 

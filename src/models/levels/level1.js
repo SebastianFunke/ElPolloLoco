@@ -11,19 +11,28 @@ const level1 = new Level([
         new Cloud('src/img/5.Fondo/Capas/4.nubes/2.png', 1, 0)
     ], [
         new Chicken(),
-        /*new Chicken(),
-        new Chicken(),
-        new Chicken(),
         new Chicken(),
         new Chicken(),
         new Chicken()
-*/
+
+
     ], [
-        new PickableObject(),
-        new PickableObject(),
-        new PickableObject(),
-        new PickableObject(),
-        new PickableObject()
+        new PickableCoin(),
+        new PickableCoin(),
+        new PickableCoin(),
+        new PickableCoin(),
+        new PickableCoin()
+    ], [
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle(),
+        new PickableBottle()
+
     ]
 
 
