@@ -19,6 +19,10 @@ const level1 = new Level([
         new Chicken()
 */
     ], [
+        new PickableObject(),
+        new PickableObject(),
+        new PickableObject(),
+        new PickableObject(),
         new PickableObject()
     ]
 

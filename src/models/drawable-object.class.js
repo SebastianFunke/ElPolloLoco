@@ -55,9 +55,11 @@ class DrawableObject {
         ctx.beginPath();
         ctx.lineWidth = "6";
         ctx.strokeStyle = "red";
-        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.rect(this.collidingX, this.collidingY, this.collidingwidth, this.collidingheight);
         ctx.stroke();
+
     }
+
 
 
 

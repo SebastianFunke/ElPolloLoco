@@ -102,7 +102,6 @@ class World {
         let self = this;
         requestAnimationFrame(function() {
             self.draw();
-
         });
     }
 
@@ -122,6 +121,12 @@ class World {
     drawCoins() {
         this.coins.forEach(coin => {
             this.ctx.drawImage(coin.img, coin.x, coin.y, coin.width, coin.height);
+            //coin.drawBorder(this.ctx);
+        });
+        this.coins.forEach(function(item, index, object) {
+            if (item.energy <= 0) {
+                object.splice(index, 1);
+            }
         });
     }
 
@@ -151,9 +156,15 @@ class World {
                         this.endBoss.hit();
                     }
                     bottle.collides();
-
                 };
             });
+
+            this.coins.forEach((coin) => {
+                if (this.character.isColliding(coin)) {
+                    coin.energy = 0;
+                    this.character.addCoin();
+                }
+            })
 
 
         }, 100);
@@ -192,14 +203,11 @@ class World {
     }
 
     drawBottle() {
-
         this.bottles.forEach(function(item, index, object) {
             if (item.energy <= 0) {
                 object.splice(index, 1);
             }
-        })
-
-
+        });
         this.bottles.forEach(element => {
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
         });
@@ -229,6 +237,10 @@ class World {
                         this.backgroundObjects.forEach(object => {
                             object.moveBgLeft(this.canvas.width, this.maxSpeed);
                         });
+
+                        this.coins.forEach(coin => {
+                            coin.moveRight(this.maxSpeed);
+                        });
                     }
                     if (this.character.leftEnd && keyboard.getPressedKey('left')) {
                         this.endBoss.moveRight();
@@ -237,6 +249,9 @@ class World {
                         });
                         this.backgroundObjects.forEach(object => {
                             object.moveBgRight(this.canvas.width, this.maxSpeed);
+                        });
+                        this.coins.forEach(coin => {
+                            coin.moveLeft(this.maxSpeed);
                         });
                     }
 

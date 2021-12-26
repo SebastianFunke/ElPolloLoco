@@ -1,4 +1,4 @@
-class PickableObject extends DrawableObject {
+class PickableObject extends MovableObject {
 
     coinImgs = [];
     coinImgsCache = [
@@ -17,10 +17,12 @@ class PickableObject extends DrawableObject {
         super();
         this.coinImgs = this.loadImages(this.coinImgsCache);
         this.animate();
-        this.x = 500;
-        this.y = 500;
+        this.x = properties.width * Math.random() * 6 + 650;
+        this.y = properties.height * Math.random() + properties.height;
+        console.log(this.y, properties.height);
         this.height = 400;
         this.width = 400;
+        this.setCollidingParams();
     }
 
     animate() {

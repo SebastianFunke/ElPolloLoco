@@ -6,7 +6,7 @@ class Character extends MovableObject {
     leftEnd = false;
     rightEnd = false;
     deadImgPosition = 0;
-    coins = 75;
+    coins = 0;
     bottles = 100;
     moveImages = [];
     idleImages = [];
@@ -94,6 +94,8 @@ class Character extends MovableObject {
         this.speed = speed;
         this.main();
         this.applyGravity();
+        this.setCollidingParams();
+
     }
 
     main() {
@@ -136,6 +138,11 @@ class Character extends MovableObject {
         }, 1000 / 60);
     }
 
+    addCoin() {
+
+        this.coins += 20;
+        console.log(this.coins);
+    }
 
     displayIdle() {
         this.idleTimerCount++;
@@ -176,9 +183,8 @@ class Character extends MovableObject {
     }
 
     checkResetIdle() {
-        if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
+        if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left') || keyboard.getPressedKey('d') || keyboard.getPressedKey('space')) {
             this.idleTimerCount = 0;
-
         }
     }
 

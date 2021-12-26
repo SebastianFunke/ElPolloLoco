@@ -39,6 +39,7 @@ class ThrowableObject extends MovableObject {
         }
         this.rotate();
         this.throw();
+        this.setCollidingParams();
     }
 
 

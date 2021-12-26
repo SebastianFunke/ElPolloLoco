@@ -19,6 +19,8 @@ class Chicken extends MovableObject {
         this.width = 200;
         this.move();
         this.animate();
+        this.setCollidingParams();
+
     }
 
 

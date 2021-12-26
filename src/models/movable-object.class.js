@@ -1,6 +1,9 @@
 class MovableObject extends DrawableObject {
     maxSpeed;
-
+    collidingY;
+    collidingX;
+    collidingheight;
+    collidingwidth;
 
     jumpImgUpPosition = 0;
     jumpImgFallPosition = 0;
@@ -25,6 +28,19 @@ class MovableObject extends DrawableObject {
     }
 
 
+
+    isColliding(mo) {
+        return this.collidingX + this.collidingwidth > mo.collidingX &&
+            this.collidingY + this.collidingheight > mo.collidingY &&
+            this.collidingX < mo.collidingX &&
+            this.collidingY < mo.collidingY + mo.collidingheight;
+
+
+        /*return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height*/
+    }
     applyGravity() {
         setInterval(() => {
             if (!this.isDead()) {
@@ -84,16 +100,40 @@ class MovableObject extends DrawableObject {
         return this.timePassed < 1;
     }
 
-
-
-
-
-    isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+    moveLeft(speed) {
+        this.x += speed;
     }
+
+    moveRight(speed) {
+        this.x -= speed;
+    }
+
+    setCollidingParams() {
+        setInterval(() => {
+            if (this instanceof Character) {
+                this.collidingheight = this.height / 1.7;
+                this.collidingY = this.y + this.height / 2.6;
+                this.collidingX = this.x;
+                this.collidingwidth = this.width;
+            } else if (this instanceof PickableObject) {
+                this.collidingheight = this.height / 3;
+                this.collidingY = this.y + this.height / 3;
+                this.collidingX = this.x + this.width / 3;
+                this.collidingwidth = this.width / 3;
+            } else {
+                this.collidingheight = this.height;
+                this.collidingY = this.y;
+                this.collidingX = this.x;
+                this.collidingwidth = this.width;
+            }
+
+        }, 1000 / 25);
+    }
+
+
+
+
+
 
 
 

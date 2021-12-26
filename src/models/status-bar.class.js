@@ -61,7 +61,6 @@ class StatusBar extends DrawableObject {
             this.barImgs = this.loadImages(this.bossBarLifeCache);
             this.y = 20;
             this.x = (properties.width * properties.scale) - this.width;
-            console.log('bossBar x: ', this.x);
         }
 
 
