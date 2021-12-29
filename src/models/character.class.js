@@ -107,6 +107,7 @@ class Character extends MovableObject {
                 } else if (this.isInAir() && this.speedY <= 0) {
                     this.displayJumpUp();
                 } else if (this.isInAir() && this.speedY > 0) {
+                    this.hasSmashed = false;
                     this.displayJumpFall();
                 } else {
 

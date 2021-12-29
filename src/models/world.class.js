@@ -157,9 +157,9 @@ class World {
 
     checkColissions() {
         setInterval(() => {
-
             this.enemies.forEach((enemy) => {
-                if (this.character.isSmashed(enemy)) {
+                if (this.character.isSmashed(enemy) && enemy.energy > 0) {
+                    this.character.jumpSmash = true;
                     enemy.energy = 0;
                     enemy.setDeadImgs();
                 };

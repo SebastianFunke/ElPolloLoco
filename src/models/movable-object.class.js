@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     isHigher = false;
     jumpImgUpPosition = 0;
     jumpImgFallPosition = 0;
-
+    jumpSmash = false;
     speed = 2;
     jumpHeight = -80;
     speedY = 0;
@@ -69,8 +69,15 @@ class MovableObject extends DrawableObject {
 
 
                 if (!this.isInAir() && this.isJumping) {
+                    this.jumpSmash = false;
                     this.y = this.ground;
 
+                }
+
+                if (this.jumpSmash) {
+                    this.jumpgImgPosition = 0;
+                    this.speedY = this.jumpHeight / 2;
+                    this.jumpSmash = false;
                 }
             }
         }, 1000 / 25);
@@ -85,10 +92,9 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        console.log(this.energy);
+
         if (this instanceof Character) {
             if (!this.isHitted()) {
-
                 this.energy -= 15;
                 this.setLastHit();
             }
