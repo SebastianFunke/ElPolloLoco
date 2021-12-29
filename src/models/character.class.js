@@ -204,6 +204,7 @@ class Character extends MovableObject {
 
     }
 
+
     increaseImgPosition() {
         this.imgPosition++;
     }

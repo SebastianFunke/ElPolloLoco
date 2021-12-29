@@ -55,3 +55,25 @@ section {
 #canvas {
     background-color: black;
 }
+
+#infoText {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em 0;
+    position: relative;
+    top: -80px;
+}
+
+.fullScreenImg {
+    background-color: transparent;
+    padding: 8px;
+    cursor: pointer;
+    transition: 225ms ease-in-out;
+}
+
+.fullScreenImg:hover {
+    transform: scale(1.5);
+    filter: contrast(0.5);
+    transition: 225ms ease-in-out;
+}

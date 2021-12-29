@@ -23,6 +23,7 @@ class World {
         canvas.height = properties.height * properties.scale;
         canvas.style.width = properties.width + 'px';
         canvas.style.height = properties.height + 'px';
+        this.setInfoText();
         this.setCharacter();
         this.setBackgroundObjects();
         this.setEnemies();
@@ -38,6 +39,9 @@ class World {
         this.checkGenerateBottle();
     }
 
+    setInfoText() {
+        document.getElementById('infoText').style.width = properties.width + 'px';
+    }
 
     setCharacter() {
         this.character = new Character(this.canvas.width, this.maxSpeed);
