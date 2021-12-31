@@ -196,6 +196,8 @@ class World {
 
             this.coins.forEach((coin) => {
                 if (this.character.isColliding(coin)) {
+                    sounds.pauseCoin();
+                    sounds.playCoin();
                     coin.energy = 0;
                     this.character.addCoin();
                 }
@@ -203,6 +205,7 @@ class World {
 
             this.pickableBottles.forEach((pickableBottle) => {
                 if (this.character.isColliding(pickableBottle)) {
+                    sounds.playBottlePick();
                     pickableBottle.energy = 0;
                     this.character.addBottle();
                 }

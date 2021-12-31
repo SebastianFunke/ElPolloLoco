@@ -8,6 +8,7 @@ class DrawableObject {
     width;
     imageCache = [];
     imageArray = [];
+    playedSound = false;
 
     loadImage(path) {
         this.img = new Image();

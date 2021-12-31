@@ -77,6 +77,7 @@ class Chicken extends MovableObject {
     }
 
     setDeadImgs() {
+        sounds.playEnemySmash();
         this.img = this.dyingImgs[0];
     }
 

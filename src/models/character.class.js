@@ -98,9 +98,14 @@ class Character extends MovableObject {
 
     }
 
+    //toDo  sounds.playLanding();
+    //toDo sound endboss
+
     main() {
 
         setInterval(() => {
+
+            sounds.pause();
             if (!this.isDead()) {
                 if (this.isHitted()) {
                     this.displayHurt();
@@ -154,11 +159,13 @@ class Character extends MovableObject {
         if (this.idleTimerCount <= this.idleTimer) {
             this.img = this.idleImages[this.imgPosition % this.idleImages.length];
         } else {
+            sounds.playSleep();
             this.img = this.longIdleImages[this.imgPosition % this.longIdleImages.length];
         }
     }
     displayHurt() {
         this.img = this.hurtImages[this.imgPosition % this.hurtImages.length];
+        this.idleTimerCount = 0;
 
     }
     displayJumpUp() {
@@ -184,7 +191,9 @@ class Character extends MovableObject {
     }
 
     displayMove() {
+        sounds.playWalking();
         this.img = this.moveImages[this.imgPosition % this.moveImages.length];
+
     }
 
     checkResetIdle() {

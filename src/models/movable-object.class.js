@@ -57,6 +57,7 @@ class MovableObject extends DrawableObject {
         setInterval(() => {
             if (!this.isDead()) {
                 if (keyboard.getPressedKey('space') && !this.isInAir()) {
+                    sounds.playJumpUp();
                     this.jumpgImgPosition = 0;
                     this.speedY = this.jumpHeight;
 
@@ -68,11 +69,11 @@ class MovableObject extends DrawableObject {
                 }
 
 
-                if (!this.isInAir() && this.isJumping) {
+                /*if (!this.isInAir() && this.isJumping) {
                     this.jumpSmash = false;
                     this.y = this.ground;
 
-                }
+                }*/
 
                 if (this.jumpSmash) {
                     this.jumpgImgPosition = 0;
@@ -95,6 +96,7 @@ class MovableObject extends DrawableObject {
 
         if (this instanceof Character) {
             if (!this.isHitted()) {
+                sounds.playCharacterHurt();
                 this.energy -= 15;
                 this.setLastHit();
             }
@@ -145,7 +147,7 @@ class MovableObject extends DrawableObject {
                 this.collidingwidth = this.width;
             }
 
-        }, 1000 / 25);
+        }, 1000 / 60);
     }
 
 

@@ -1,6 +1,6 @@
 let canvas;
 let keyboard = new Keyboard();
-
+let sounds = new Sounds();
 
 
 
@@ -14,6 +14,7 @@ function init() {
 
 
 window.addEventListener('keydown', (event) => {
+    event.preventDefault();
     keyboard.setKeyPressed(event);
 });
 

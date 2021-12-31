@@ -10,7 +10,7 @@ class PickableBottle extends MovableObject {
     constructor() {
         super();
         this.bottleImgs = this.loadImages(this.bottleImgsCache);
-        this.x = properties.width * Math.random() * 5 + 650;
+        this.x = properties.width * Math.random() * 2 * properties.scale + 650;
         this.y = properties.height / 5 * 4 * properties.scale;
         this.height = 200;
         this.width = 200;

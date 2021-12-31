@@ -47,6 +47,11 @@ class ThrowableObject extends MovableObject {
     rotate() {
         setInterval(() => {
             if (!this.isInAir() || this.collided) {
+                if (this.energy > 0 && !this.playedSound) {
+                    sounds.pauseBottleSmash();
+                    sounds.playBottleSmash();
+                    this.playedSound = true;
+                }
                 this.img = this.splashImgs[this.imgPositionSplash];
                 this.imgPositionSplash++;
                 if (this.imgPositionSplash >= this.splashImgs.length) {
@@ -72,6 +77,7 @@ class ThrowableObject extends MovableObject {
 
     collides() {
         this.collided = true;
+
     }
 
     hasHitted() {
