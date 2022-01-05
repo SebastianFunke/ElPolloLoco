@@ -265,14 +265,18 @@ class World {
             this.enemies.forEach(enemy => {
                 enemy.setAdditionalSpeed(0);
             });
-
+            this.bottles.forEach(bottle => {
+                bottle.setAdditionalSpeed(0);
+            });
 
 
             if (!this.character.isDead()) {
                 if (!this.character.checkBothDirectionKeysPressed()) {
                     if (this.character.rightEnd && keyboard.getPressedKey('right')) {
                         this.endBoss.moveLeft();
-
+                        this.bottles.forEach(bottle => {
+                            bottle.setAdditionalSpeed(this.maxSpeed * -1);
+                        });
 
                         this.enemies.forEach(enemy => {
                             enemy.setAdditionalSpeed(this.maxSpeed);
@@ -295,6 +299,9 @@ class World {
                         });
                         this.backgroundObjects.forEach(object => {
                             object.moveBgLeft(this.canvas.width, this.maxSpeed);
+                        });
+                        this.bottles.forEach(bottle => {
+                            bottle.setAdditionalSpeed(this.maxSpeed);
                         });
                         this.coins.forEach(coin => {
                             coin.moveLeft(this.maxSpeed);

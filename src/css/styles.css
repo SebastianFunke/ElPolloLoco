@@ -77,3 +77,16 @@ section {
     filter: contrast(0.5);
     transition: 225ms ease-in-out;
 }
+
+#muteBtn {
+    background-color: transparent;
+    padding: 8px;
+    cursor: pointer;
+    transition: 225ms ease-in-out;
+}
+
+#muteBtn:hover {
+    transform: scale(1.5);
+    filter: contrast(0.5);
+    transition: 225ms ease-in-out;
+}

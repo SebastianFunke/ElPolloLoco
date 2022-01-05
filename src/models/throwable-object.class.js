@@ -2,6 +2,7 @@ class ThrowableObject extends MovableObject {
     collided = false;
     bottleImgs = [];
     splashImgs = [];
+    additionalSpeed = 0;
     imgPositionSplash = 0;
     bottleImgsCache = [
         "src/img/6.botella/Rotación/Mesa de trabajo 1 copia 3.png",
@@ -30,9 +31,10 @@ class ThrowableObject extends MovableObject {
         this.y = positionY;
         this.height = 250;
         this.width = 250;
-        this.speedY = 80;
+        this.speedY = 70;
+        this.speedX = 45;
         this.img = this.bottleImgs[0];
-        this.acceleration = 12;
+        this.acceleration = 5;
         this.ground = 1300;
         if (!direction) {
             this.speedX *= -1;
@@ -70,9 +72,11 @@ class ThrowableObject extends MovableObject {
                 this.y -= this.speedY;
                 this.x += this.speedX;
                 this.speedY -= this.acceleration;
+            } else {
+                this.x += this.additionalSpeed;
             }
 
-        }, 1000 / 20);
+        }, 1000 / 60);
     }
 
     collides() {
@@ -82,5 +86,8 @@ class ThrowableObject extends MovableObject {
 
     hasHitted() {
         return this.collided;
+    }
+    setAdditionalSpeed(speed) {
+        this.additionalSpeed = speed;
     }
 }
