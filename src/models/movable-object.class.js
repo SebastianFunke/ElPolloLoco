@@ -60,20 +60,12 @@ class MovableObject extends DrawableObject {
                     sounds.playJumpUp();
                     this.jumpgImgPosition = 0;
                     this.speedY = this.jumpHeight;
-
                 }
 
                 if (this.isInAir() || this.speedY < 0) {
                     this.y += this.speedY;
                     this.speedY += this.acceleration;
                 }
-
-
-                /*if (!this.isInAir() && this.isJumping) {
-                    this.jumpSmash = false;
-                    this.y = this.ground;
-
-                }*/
 
                 if (this.jumpSmash) {
                     this.jumpgImgPosition = 0;
@@ -84,30 +76,29 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
     isDead() {
-
         return this.energy < 1;
-
     }
+
     isInAir() {
         return this.y < this.ground;
     }
 
     hit() {
-
         if (this instanceof Character) {
             if (!this.isHitted()) {
                 sounds.playCharacterHurt();
                 this.energy -= 15;
                 this.setLastHit();
             }
-
         } else {
             this.energy -= 20;
-            this.setLastHit();
-
+            if (this.energy > 0) {
+                sounds.playBossHit();
+            } else if (!this.playedSound) {
+                sounds.playBossDead();
+                this.playedSound = true;
+            }
         };
-
-
     }
 
     setLastHit() {

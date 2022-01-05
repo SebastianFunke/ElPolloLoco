@@ -98,7 +98,7 @@ class Character extends MovableObject {
 
     }
 
-    //toDo  sounds.playLanding();
+
     //toDo sound endboss
 
     main() {

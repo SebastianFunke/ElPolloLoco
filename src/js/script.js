@@ -31,5 +31,14 @@ function setFullscreen() {
     } else if (elem.msRequestFullscreen) { /* IE11 */
         elem.msRequestFullscreen();
     }
+}
 
+function toggleMute() {
+    sounds.mute = !sounds.mute;
+    if (sounds.mute) {
+        document.getElementById('btnMute').src = 'src/img/mute.png';
+    } else {
+        document.getElementById('btnMute').src = 'src/img/volume.png';
+    }
+    console.log(sounds.mute);
 }

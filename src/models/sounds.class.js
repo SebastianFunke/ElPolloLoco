@@ -1,5 +1,5 @@
 class Sounds {
-    mute = false;
+    mute = true;
     walking = new Audio('src/sounds/walking.mp3');
     bottleSmash = new Audio('src/sounds/bottle_smash.mp3');
     enemySmash = new Audio('src/sounds/enemy_smash.mp3');
@@ -9,7 +9,8 @@ class Sounds {
     bottlePick = new Audio('src/sounds/bottle_pick.mp3');
     characterHurt = new Audio('src/sounds/player_hurt.mp3');
     characterSleep = new Audio('src/sounds/sleep.mp3');
-
+    bossHit = new Audio('src/sounds/boss_hit.mp3');
+    bossDead = new Audio('src/sounds/boss_dead.mp3');
     constructor() {
 
     }
@@ -37,8 +38,10 @@ class Sounds {
         }
     }
 
+    playBossDead() {
+        this.play(this.bossDead);
+    }
     playBottleSmash() {
-
         this.play(this.bottleSmash);
     }
 
@@ -46,11 +49,20 @@ class Sounds {
         this.bottleSmash.pause();
         this.bottleSmash.currentTime = 0;
     }
+    playBossHit() {
+        this.bossHit.pause();
+        this.bossHit.currentTime = 0;
+        this.play(this.bossHit);
+    }
 
+    pauseBossHit() {
+
+    }
     pauseCoin() {
         this.coin.pause();
         this.coin.currentTime = 0;
     }
+
 
     playEnemySmash() {
         this.play(this.enemySmash);

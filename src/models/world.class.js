@@ -32,11 +32,9 @@ class World {
         this.setStatusBar();
         this.setCoins();
         this.setBottles();
-        this.draw();
+        this.main();
         this.checkBgMove();
-        this.drawClouds();
-        this.checkColissions();
-        this.checkGenerateBottle();
+
     }
 
     setInfoText() {
@@ -46,6 +44,7 @@ class World {
     setCharacter() {
         this.character = new Character(this.canvas.width, this.maxSpeed);
     }
+
     setBackgroundObjects() {
         this.backgroundObjects = level1.backgroundObjects;
     }
@@ -78,54 +77,47 @@ class World {
         this.pickableBottles = level1.bottles;
     }
 
-    draw() {
+    main() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-
-        this.backgroundObjects.forEach(backgroundObject => {
-            this.ctx.drawImage(backgroundObject.img, backgroundObject.x, 0, this.canvas.width, this.canvas.height);
-        });
-
-        this.cloudObjects.forEach(cloud => {
-            this.ctx.drawImage(cloud.img, cloud.x, 0, this.canvas.width, this.canvas.height);
-        });
-
-        this.enemies.forEach(enemy => {
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-            //enemy.drawBorder(this.ctx);
-        });
-
-
+        this.drawBackgroundObjects();
+        this.drawClouds();
+        this.drawEnemies();
         this.drawEndBoss();
         this.drawCoins();
         this.drawCharacter();
         this.drawStatusBars();
         this.drawBottle();
-        this.drawpickableBottles()
-
+        this.drawpickableBottles();
+        this.checkColissions();
+        this.checkGenerateBottle();
         let self = this;
         requestAnimationFrame(function() {
-            self.draw();
+            self.main();
         });
     }
 
-
-
-
-
+    drawBackgroundObjects() {
+        this.backgroundObjects.forEach(backgroundObject => {
+            this.ctx.drawImage(backgroundObject.img, backgroundObject.x, 0, this.canvas.width, this.canvas.height);
+        });
+    }
 
     drawClouds() {
-        setInterval(() => {
-            this.cloudObjects.forEach(cloud => {
-                cloud.moveCloudLeft(this.canvas.width, this.speedBgLayerFour);
-            });
-        }, 1000 / 60);
+        this.cloudObjects.forEach(cloud => {
+            cloud.moveCloudLeft(this.canvas.width, this.speedBgLayerFour);
+            this.ctx.drawImage(cloud.img, cloud.x, 0, this.canvas.width, this.canvas.height);
+        });
+    }
+
+    drawEnemies() {
+        this.enemies.forEach(enemy => {
+            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+        });
     }
 
     drawCoins() {
         this.coins.forEach(coin => {
             this.ctx.drawImage(coin.img, coin.x, coin.y, coin.width, coin.height);
-            //coin.drawBorder(this.ctx);
         });
         this.coins.forEach(function(item, index, object) {
             if (item.energy <= 0) {
@@ -137,7 +129,6 @@ class World {
     drawpickableBottles() {
         this.pickableBottles.forEach(pickablebottle => {
             this.ctx.drawImage(pickablebottle.img, pickablebottle.x, pickablebottle.y, pickablebottle.width, pickablebottle.height);
-
         });
         this.pickableBottles.forEach(function(item, index, object) {
             if (item.energy <= 0) {
@@ -146,87 +137,14 @@ class World {
         });
     }
 
-
-    getHeight() {
-        return this.canvas.height;
-    }
-
-    getWidth() {
-        return this.canvas.width;
-    }
-
-    getMaxSpeed() {
-        return this.maxSpeed;
-    }
-
-    checkColissions() {
-        setInterval(() => {
-            this.enemies.forEach((enemy) => {
-                if (this.character.isSmashed(enemy) && enemy.energy > 0) {
-                    this.character.jumpSmash = true;
-                    enemy.energy = 0;
-                    enemy.setDeadImgs();
-                };
-            });
-
-            this.enemies.forEach((enemy) => {
-                if (this.character.checkHigher(enemy)) {
-                    enemy.isHigher = true;
-                } else {
-                    enemy.isHigher = false;
-                };
-            });
-
-
-
-            this.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && enemy.energy > 0) {
-                    this.character.hit();
-                };
-            });
-
-            this.bottles.forEach((bottle) => {
-                if (this.endBoss.isColliding(bottle)) {
-                    if (!bottle.hasHitted()) {
-                        this.endBoss.hit();
-                    }
-                    bottle.collides();
-                };
-            });
-
-            this.coins.forEach((coin) => {
-                if (this.character.isColliding(coin)) {
-                    sounds.pauseCoin();
-                    sounds.playCoin();
-                    coin.energy = 0;
-                    this.character.addCoin();
-                }
-            });
-
-            this.pickableBottles.forEach((pickableBottle) => {
-                if (this.character.isColliding(pickableBottle)) {
-                    sounds.playBottlePick();
-                    pickableBottle.energy = 0;
-                    this.character.addBottle();
-                }
-            });
-
-        }, 100);
-    }
-
     drawCharacter() {
-
         if (!this.character.lookDirection) {
             this.ctx.save();
             this.ctx.translate(this.character.width, 0);
             this.ctx.scale(-1, 1);
             this.character.x = this.character.x * -1;
-
         }
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-
-        //this.character.drawBorder(this.ctx);
-
         if (!this.character.lookDirection) {
             this.character.x = this.character.x * -1;
             this.ctx.restore();
@@ -235,11 +153,9 @@ class World {
 
     drawEndBoss() {
         this.ctx.drawImage(this.endBoss.img, this.endBoss.x, this.endBoss.y, this.endBoss.width, this.endBoss.height);
-        //this.endBoss.drawBorder(this.ctx);
     }
 
     drawStatusBars() {
-
         this.statusBar.forEach(element => {
             element.setImg(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
@@ -257,6 +173,89 @@ class World {
         });
 
     }
+
+
+    getHeight() {
+        return this.canvas.height;
+    }
+
+    getWidth() {
+        return this.canvas.width;
+    }
+
+    getMaxSpeed() {
+        return this.maxSpeed;
+    }
+
+    checkEnemiesSmashed() {
+        this.enemies.forEach((enemy) => {
+            if (this.character.isSmashed(enemy) && enemy.energy > 0) {
+                this.character.jumpSmash = true;
+                enemy.energy = 0;
+                enemy.setDeadImgs();
+            };
+        });
+    }
+
+    checkEnemiesHigher() {
+        this.enemies.forEach((enemy) => {
+            if (this.character.checkHigher(enemy)) {
+                enemy.isHigher = true;
+            } else {
+                enemy.isHigher = false;
+            };
+        });
+    }
+
+    checkEnemiesColiding() {
+        this.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && enemy.energy > 0) {
+                this.character.hit();
+            };
+        });
+    }
+
+    checkBottles() {
+        this.bottles.forEach((bottle) => {
+            if (this.endBoss.isColliding(bottle)) {
+                if (!bottle.hasHitted()) {
+                    this.endBoss.hit();
+                }
+                bottle.collides();
+            };
+        });
+    }
+
+    checkCoins() {
+        this.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                sounds.pauseCoin();
+                sounds.playCoin();
+                coin.energy = 0;
+                this.character.addCoin();
+            }
+        });
+    }
+
+    checkPickableObjects() {
+        this.pickableBottles.forEach((pickableBottle) => {
+            if (this.character.isColliding(pickableBottle)) {
+                sounds.playBottlePick();
+                pickableBottle.energy = 0;
+                this.character.addBottle();
+            }
+        });
+    }
+
+    checkColissions() {
+        this.checkEnemiesSmashed();
+        this.checkEnemiesHigher();
+        this.checkEnemiesColiding();
+        this.checkBottles();
+        this.checkCoins();
+        this.checkPickableObjects();
+    }
+
 
 
     checkBgMove() {

@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="src\css\styles.css">
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="src/models/sounds.class.js"></script>
     <script src="src/js/include.js"></script>
     <script src="src/models/drawable-object.class.js"></script>
     <script src="src/models/movable-object.class.js"></script>
     <script src="src/models/pickableCoin.class.js"></script>
     <script src="src/models/pickableBottle.class.js"></script>
-    <script src="src/models/sounds.class.js"></script>
+
 
 
     <script src="src/models/cloud.class.js"></script>
@@ -49,6 +50,7 @@
                 <canvas id="canvas"></canvas>
                 <div id="infoText">
                     <img class="fullScreenImg" src="src/img/fullscreen.png" onclick="setFullscreen()" alt="">
+                    <img id="btnMute" class="fullScreenImg" src="src/img/mute.png" onclick="toggleMute()" alt="">
                 </div>
             </section>
 
