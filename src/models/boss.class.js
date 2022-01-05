@@ -11,7 +11,6 @@ class EndBoss extends MovableObject {
         "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G2.png",
         "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G3.png",
         "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G4.png"
-
     ];
     alertImagesCache = [
         "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G13.png",
@@ -35,24 +34,29 @@ class EndBoss extends MovableObject {
         "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G23.png",
     ];
 
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     */
     constructor() {
-        super().loadImage("src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png")
-        this.moveImages = this.loadImages(this.moveImagesCache);
-        this.alertImages = this.loadImages(this.alertImagesCache);
-        this.dyingImages = this.loadImages(this.dyingImagesCache);
-        this.hurtImages = this.loadImages(this.hurtImagesCache);
-        this.x = properties.width * 6 + 850;;
-        this.y = 700;
-        this.height = 900;
-        this.width = 900;
-        this.speed = properties.maxSpeed / 5;
-        this.main();
-        this.energy = 50;
-        this.setCollidingParams();
-
-    }
-
-
+            super().loadImage("src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png")
+            this.moveImages = this.loadImages(this.moveImagesCache);
+            this.alertImages = this.loadImages(this.alertImagesCache);
+            this.dyingImages = this.loadImages(this.dyingImagesCache);
+            this.hurtImages = this.loadImages(this.hurtImagesCache);
+            this.x = properties.width * 6 + 850;;
+            this.y = 700;
+            this.height = 900;
+            this.width = 900;
+            this.speed = properties.maxSpeed / 5;
+            this.main();
+            this.energy = 50;
+            this.setCollidingParams();
+        }
+        /**
+         * function to decide which pictures should be drawn
+         */
     main() {
         setInterval(() => {
             if (!this.isDead()) {
@@ -64,41 +68,54 @@ class EndBoss extends MovableObject {
             } else {
                 this.displayDead();
             }
-
             this.imgPosition++;
-
         }, 100);
-
     }
 
+    /**
+     * function to set images when the object is moving
+     */
     displayMove() {
         this.x -= this.speed;
         this.img = this.moveImages[this.imgPosition % this.moveImages.length];
     }
 
+    /**
+     * function to set images when the object is idle
+     */
     displayIdle() {
         this.img = this.alertImages[this.imgPosition % this.alertImages.length];
     }
+
+    /**
+     * function to set images when the object is hurt
+     */
     displayHurt() {
         this.img = this.hurtImages[this.imgPosition % this.hurtImages.length];
     }
-    displayDead() {
 
+    /**
+     * function to set images when the object is dead
+     */
+    displayDead() {
         this.img = this.dyingImages[this.deadImgPosition];
         if (this.deadImgPosition < this.dyingImages.length - 1) {
             this.deadImgPosition++;
         }
-
     }
+
+    /**
+     * if called object will move to left
+     */
     moveLeft() {
         this.x -= properties.maxSpeed
     }
 
+    /**
+     * if called object will move right
+     */
     moveRight() {
         this.x += properties.maxSpeed
     }
-
-
-
 
 }

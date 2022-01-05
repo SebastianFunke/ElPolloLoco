@@ -16,6 +16,11 @@ class Chicken extends MovableObject {
     dyingImgsCache = ["src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/4.png"];
     dyingImgsCacheAlternative = ["src/img/3.Secuencias_Enemy_básico/Versión_pollito/4.muerte.png"];
 
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     */
     constructor() {
         super().loadImage("src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.png")
         this.canvasWidth = properties.width * properties.scale;
@@ -30,6 +35,9 @@ class Chicken extends MovableObject {
         this.setCollidingParams();
     }
 
+    /**
+     * function to give the opponent a random appearance
+     */
     randomizeImg() {
         if (Math.floor(Math.random() * 2)) {
             this.moveImages = this.loadImages(this.imgCache);
@@ -40,6 +48,11 @@ class Chicken extends MovableObject {
         }
     }
 
+    /**
+     * lets the oppenent move while he is alive
+     * if oppenent is dead speed is set to zero, so it don not move anymore
+     * if oppenent is out of left screen it will be resurrected at a random position
+     */
     move() {
         setInterval(() => {
             let speed;
@@ -51,15 +64,23 @@ class Chicken extends MovableObject {
             speed += this.additionalSpeed;
             this.x -= speed;
             if (this.x < 0 - this.width) {
-                this.x = this.canvasWidth * Math.random() + this.canvasWidth;
-                this.energy = 100;
-                this.randomizeImg();
-
+                this.resurrect();
             }
         }, 1000 / 60);
-
     }
 
+    /**
+     * resurrect the enemy and set its position randomly
+     */
+    resurrect() {
+        this.x = this.canvasWidth * Math.random() + this.canvasWidth;
+        this.energy = 100;
+        this.randomizeImg();
+    }
+
+    /**
+     * animates the oppenent with move images
+     */
     animate() {
         setInterval(() => {
             if (this.isAlive()) {
@@ -69,13 +90,26 @@ class Chicken extends MovableObject {
         }, 100);
     }
 
+    /**
+     * checks if the oppenents energy is over zero
+     * @returns boolean - energy over zero
+     */
     isAlive() {
         return this.energy > 0;
     }
+
+    /**
+     * if the background moves, the opponent is given additional speed or 
+     * subtracted. depending on which direction the background is moving
+     * @param {number} input - additional speed
+     */
     setAdditionalSpeed(input) {
         this.additionalSpeed = input;
     }
 
+    /**
+     * set the image to dead images
+     */
     setDeadImgs() {
         sounds.playEnemySmash();
         this.img = this.dyingImgs[0];

@@ -7,6 +7,11 @@ class Keyboard {
     SPACE = false;
     D = false;
 
+    /**
+     * sets the associated variable of the key that was pressed to true
+     * on key down event
+     * @param {string} keyCode 
+     */
     setKeyPressed(keyCode) {
         switch (keyCode['key']) {
             case 'ArrowUp':
@@ -28,9 +33,13 @@ class Keyboard {
                 this.SPACE = true;
                 break;
         }
-
     }
 
+    /**
+     * sets the associated variable of the key that was pressed to false
+     * on key up event
+     * @param {string} keyCode 
+     */
     setKeyLeaved(keyCode) {
         switch (keyCode['key']) {
             case 'ArrowUp':
@@ -51,10 +60,14 @@ class Keyboard {
             case 'd':
                 this.D = false;
                 break;
-
         }
     }
 
+    /**
+     * this function can be used to check whether a certain key is currently pressed
+     * @param {string} key 
+     * @returns boolean
+     */
     getPressedKey(key) {
         switch (key) {
             case 'up':

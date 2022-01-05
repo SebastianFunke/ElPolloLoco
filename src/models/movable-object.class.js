@@ -20,15 +20,20 @@ class MovableObject extends DrawableObject {
     timePassed = 0;
     lastHit = 0;
 
-
+    /**
+     * function is called when object is generated
+     */
     constructor() {
         super();
         this.energy = properties.characterEnergy;
 
     }
 
-
-
+    /**
+     * function to check if the object is colliding with another object
+     * @param {object} mo - movable object 
+     * @returns boolean
+     */
     isColliding(mo) {
         return this.collidingX + this.collidingwidth > mo.collidingX &&
             this.collidingY + this.collidingheight > mo.collidingY &&

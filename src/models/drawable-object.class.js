@@ -10,11 +10,20 @@ class DrawableObject {
     imageArray = [];
     playedSound = false;
 
+    /**
+     * function to load a single image
+     * @param {string} path 
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+    /**
+     * function to load several pictures into an array
+     * @param {array} arr - array with paths of the pictures
+     * @returns array - with several pictures
+     */
     loadImages(arr) {
         this.imageArray = [];
         arr.forEach(element => {
@@ -23,49 +32,38 @@ class DrawableObject {
             this.imageArray.push(i);
         });
         return this.imageArray
-
-
     }
 
+    /**
+     * get the x position of this object
+     * @returns number
+     */
     getLeft() {
-
-
         return this.x;
     }
 
+    /**
+     * get the y position of this object
+     * @returns number
+     */
     getTop() {
-
-
         return this.y;
     }
 
+    /**
+     * get the right end position of this object
+     * @returns number
+     */
     getRight() {
-
-
         return this.x + this.width;
     }
 
+    /**
+     * get the top position of this object
+     * @returns number
+     */
     getBottom() {
-
-
         return this.y + this.height;
     }
-
-
-    drawBorder(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle = "red";
-        ctx.rect(this.collidingX, this.collidingY, this.collidingwidth, this.collidingheight);
-        ctx.stroke();
-
-    }
-
-
-
-
-
-
-
 
 }

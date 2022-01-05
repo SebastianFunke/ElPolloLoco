@@ -77,6 +77,14 @@ class Character extends MovableObject {
         "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-56.png",
 
     ];
+
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     * @param {number} canvasWidth - the width of the canvas
+     * @param {number} speed - the standard speed of this object
+     */
     constructor(canvasWidth, speed) {
         super().loadImage("src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png")
         this.moveImages = this.loadImages(this.moveImgCache);
@@ -95,16 +103,13 @@ class Character extends MovableObject {
         this.main();
         this.applyGravity();
         this.setCollidingParams();
-
     }
 
-
-    //toDo sound endboss
-
+    /**
+     * function to decide which pictures should be drawn
+     */
     main() {
-
         setInterval(() => {
-
             sounds.pause();
             if (!this.isDead()) {
                 if (this.isHitted()) {
@@ -115,15 +120,12 @@ class Character extends MovableObject {
                     this.hasSmashed = false;
                     this.displayJumpFall();
                 } else {
-
                     if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
-
                         if (this.checkBothDirectionKeysPressed()) {
                             this.displayIdle();
                         } else {
                             this.displayMove();
                         }
-
                     } else {
                         this.displayIdle();
                     }
@@ -131,7 +133,6 @@ class Character extends MovableObject {
             } else {
                 this.displayDead();
             }
-
             this.increaseImgPosition();
         }, 100);
 
@@ -144,16 +145,25 @@ class Character extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * adds a coin when a coin is picked up
+     */
     addCoin() {
-
         this.coins += 20;
-
     }
 
+    /**
+     * adds a bottle when a bottle is picked up
+     */
     addBottle() {
         this.bottles += 10;
     }
 
+    /**
+     * function to set images when the object is idle and adds 1 to idle counter
+     * when idleTimerCount is equal to idleTimer then object images will set to
+     * sleep images
+     */
     displayIdle() {
         this.idleTimerCount++;
         if (this.idleTimerCount <= this.idleTimer) {
@@ -163,22 +173,29 @@ class Character extends MovableObject {
             this.img = this.longIdleImages[this.imgPosition % this.longIdleImages.length];
         }
     }
+
+    /**
+     * function to set images when the object is hurt
+     */
     displayHurt() {
         this.img = this.hurtImages[this.imgPosition % this.hurtImages.length];
         this.idleTimerCount = 0;
-
     }
+
+    /**
+     * function to set images when the object is jumping up
+     */
     displayJumpUp() {
-        this.img = this.jumpImagesUp[this.jumpImgUpPosition];
-        if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
-            this.jumpImgUpPosition++;
-        } else {
-            this.jumpImgFallPosition = 0;
-        };
-    }
-
-
-
+            this.img = this.jumpImagesUp[this.jumpImgUpPosition];
+            if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
+                this.jumpImgUpPosition++;
+            } else {
+                this.jumpImgFallPosition = 0;
+            };
+        }
+        /**
+         * function to set images when the object is falling down
+         */
     displayJumpFall() {
         this.img = this.jumpImagesFall[this.jumpImgFallPosition];
         if (this.y > (this.ground + this.jumpHeight) / 2) {
@@ -190,36 +207,47 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * function to set images when the object is walking
+     */
     displayMove() {
         sounds.playWalking();
         this.img = this.moveImages[this.imgPosition % this.moveImages.length];
-
     }
 
+    /**
+     * resets the idle counter when a key is pressed
+     */
     checkResetIdle() {
         if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left') || keyboard.getPressedKey('d') || keyboard.getPressedKey('space')) {
             this.idleTimerCount = 0;
         }
     }
 
+    /**
+     * function to set images when the objects energy is below zero
+     * and lets the object jump a little and then fall out of the canvas
+     */
     displayDead() {
-
         setInterval(() => {
             this.img = this.deadImages[this.deadImgPosition];
             this.y += this.deadJumpHeight;
             this.deadJumpHeight += 2;
             if (this.deadImgPosition < this.deadImages.length - 1) { this.deadImgPosition++ };
         }, 1000 / 25);
-
     }
 
-
+    /**
+     * increase the imgPosition with one
+     */
     increaseImgPosition() {
         this.imgPosition++;
     }
 
-
-
+    /**
+     * check if left and right keys are pressed simultaneously
+     * @returns true when both keys are pressed / false when they are not simultaneously pressed
+     */
     checkBothDirectionKeysPressed() {
         if (keyboard.getPressedKey('right') && keyboard.getPressedKey('left')) {
             return true;
@@ -228,6 +256,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * when right key is pressed, object will move right until it reaches the right
+     * border
+     */
     checkKeyRight() {
         if (keyboard.getPressedKey('right') && !this.checkBothDirectionKeysPressed()) {
             if (!this.rightEnd) {
@@ -237,6 +269,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * when left key is pressed, object will move left until it reaches the left
+     * border
+     */
     checkKeyLeft() {
         if (keyboard.getPressedKey('left') && !this.checkBothDirectionKeysPressed()) {
             if (!this.leftEnd) {
@@ -245,6 +281,10 @@ class Character extends MovableObject {
             }
         }
     }
+
+    /**
+     * checks whether the object has reached the right edge
+     */
     checkCharacterEndRight() {
         if (this.x > this.canvasWidth / 3) {
             this.rightEnd = true;
@@ -253,6 +293,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * checks whether the object has reached the left edge
+     */
     checkCharacterEndLeft() {
         if (this.x < this.canvasWidth / 18) {
             this.leftEnd = true;
@@ -260,6 +303,5 @@ class Character extends MovableObject {
             this.leftEnd = false;
         }
     }
-
 
 }
