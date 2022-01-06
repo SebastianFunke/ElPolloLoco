@@ -40,23 +40,24 @@ class EndBoss extends MovableObject {
      * other different functions 
      */
     constructor() {
-            super().loadImage("src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png")
-            this.moveImages = this.loadImages(this.moveImagesCache);
-            this.alertImages = this.loadImages(this.alertImagesCache);
-            this.dyingImages = this.loadImages(this.dyingImagesCache);
-            this.hurtImages = this.loadImages(this.hurtImagesCache);
-            this.x = properties.width * 6 + 850;;
-            this.y = 700;
-            this.height = 900;
-            this.width = 900;
-            this.speed = properties.maxSpeed / 5;
-            this.main();
-            this.energy = 50;
-            this.setCollidingParams();
-        }
-        /**
-         * function to decide which pictures should be drawn
-         */
+        super().loadImage("src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png")
+        this.moveImages = this.loadImages(this.moveImagesCache);
+        this.alertImages = this.loadImages(this.alertImagesCache);
+        this.dyingImages = this.loadImages(this.dyingImagesCache);
+        this.hurtImages = this.loadImages(this.hurtImagesCache);
+        this.x = properties.width * 6 + 850;;
+        this.y = 700;
+        this.height = 900;
+        this.width = 900;
+        this.speed = properties.maxSpeed / 5;
+        this.main();
+        this.energy = 50;
+        this.setCollidingParams();
+    }
+
+    /**
+     * function to decide which pictures should be drawn
+     */
     main() {
         setInterval(() => {
             if (!this.isDead()) {

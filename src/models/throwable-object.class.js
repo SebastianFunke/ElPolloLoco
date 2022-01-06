@@ -22,7 +22,11 @@ class ThrowableObject extends MovableObject {
     ];
 
 
-
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     */
     constructor(positionX, positionY, direction) {
         super();
         this.bottleImgs = this.loadImages(this.bottleImgsCache);
@@ -39,14 +43,18 @@ class ThrowableObject extends MovableObject {
         if (!direction) {
             this.speedX *= -1;
         }
-        this.rotate();
+        this.main();
         this.throw();
         this.setCollidingParams();
     }
 
 
-
-    rotate() {
+    /**
+     * sets the current picture of the bottle.
+     * During the flight the bottle rotates, if the bottle hits the boss
+     * or the ground, the splash images are displayed
+     */
+    main() {
         setInterval(() => {
             if (!this.isInAir() || this.collided) {
                 if (this.energy > 0 && !this.playedSound) {
@@ -66,6 +74,9 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 10);
     }
 
+    /**
+     * lets the bottle fly and fall
+     */
     throw () {
         setInterval(() => {
             if (this.isInAir() && !this.collided) {
@@ -75,18 +86,28 @@ class ThrowableObject extends MovableObject {
             } else {
                 this.x += this.additionalSpeed;
             }
-
         }, 1000 / 60);
     }
 
+    /**
+     * set the collided variable to true
+     */
     collides() {
         this.collided = true;
-
     }
 
+    /**
+     * check if the bottle has collided
+     * @returns boolean
+     */
     hasHitted() {
         return this.collided;
     }
+
+    /**
+     * sets the additional speed, in case the character is moving
+     * @param {number} speed 
+     */
     setAdditionalSpeed(speed) {
         this.additionalSpeed = speed;
     }

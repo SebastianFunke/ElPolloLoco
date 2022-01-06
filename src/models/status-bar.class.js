@@ -39,15 +39,25 @@ class StatusBar extends DrawableObject {
     barImgs = [];
     type;
 
-
-
-
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     */
     constructor(type) {
         super();
         this.height = properties.height / 3.5;
         this.width = properties.width / 1.5;
         this.x = 20;
         this.type = type;
+        this.setAttributes(type);
+    }
+
+    /**
+     * sets different attributes depending on which type is to be generated
+     * @param {string} type 
+     */
+    setAttributes(type) {
         if (type == 'life') {
             this.barImgs = this.loadImages(this.lifeBarImgsCache);
             this.y = 20;
@@ -62,16 +72,15 @@ class StatusBar extends DrawableObject {
             this.y = 20;
             this.x = (properties.width * properties.scale) - this.width;
         }
-
-
-
-
-
-
     }
 
-
-
+    /**
+     * sets the current image in relation to the percentage of the input.
+     * @param {number} actualLife 
+     * @param {number} actualBottles 
+     * @param {number} actualCoins 
+     * @param {number} actualBossLife 
+     */
     setImg(actualLife, actualBottles, actualCoins, actualBossLife) {
         let typePercentage;
         if (this.type == 'life') {

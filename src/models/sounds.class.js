@@ -15,6 +15,29 @@ class Sounds {
 
     }
 
+    /**
+     * checks whether the player has muted the game
+     * @returns boolean
+     */
+    checkMute() {
+        return this.mute;
+    }
+
+    /**
+     * if game is not muted this function start playing the sound
+     * @param {audio} sound to play
+     */
+    play(sound) {
+        if (!this.checkMute()) {
+            sound.play();
+        }
+    }
+
+    pause() {
+        this.characterSleep.pause();
+        this.walking.pause();
+    }
+
     playWalking() {
         this.play(this.walking);
     }
@@ -23,46 +46,23 @@ class Sounds {
         this.play(this.characterSleep);
     }
 
-    pause() {
-        this.characterSleep.pause();
-        this.walking.pause();
-    }
-
     playCharacterHurt() {
         this.play(this.characterHurt);
-    }
-
-    play(sound) {
-        if (!this.checkMute()) {
-            sound.play();
-        }
     }
 
     playBossDead() {
         this.play(this.bossDead);
     }
+
     playBottleSmash() {
         this.play(this.bottleSmash);
     }
 
-    pauseBottleSmash() {
-        this.bottleSmash.pause();
-        this.bottleSmash.currentTime = 0;
-    }
     playBossHit() {
         this.bossHit.pause();
         this.bossHit.currentTime = 0;
         this.play(this.bossHit);
     }
-
-    pauseBossHit() {
-
-    }
-    pauseCoin() {
-        this.coin.pause();
-        this.coin.currentTime = 0;
-    }
-
 
     playEnemySmash() {
         this.play(this.enemySmash);
@@ -77,6 +77,8 @@ class Sounds {
     }
 
     playCoin() {
+        this.coin.pause();
+        this.coin.currentTime = 0;
         this.play(this.coin);
     }
 
@@ -84,11 +86,9 @@ class Sounds {
         this.play(this.bottlePick);
     }
 
-
-    checkMute() {
-        return this.mute;
+    pauseBottleSmash() {
+        this.bottleSmash.pause();
+        this.bottleSmash.currentTime = 0;
     }
-
-
 
 }

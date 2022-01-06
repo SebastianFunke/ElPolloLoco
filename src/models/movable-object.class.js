@@ -42,6 +42,11 @@ class MovableObject extends DrawableObject {
 
     }
 
+    /**
+     * function to check if the object is jumped on another object
+     * @param {object} mo - movable object 
+     * @returns boolean
+     */
     isSmashed(mo) {
         return this.isHigher &&
             this.collidingX + this.collidingwidth > mo.collidingX &&
@@ -49,6 +54,10 @@ class MovableObject extends DrawableObject {
             this.collidingY + this.collidingheight > mo.y
     }
 
+    /**
+     * checks if the character is higher as the mo
+     * @param {object} mo - movable object 
+     */
     checkHigher(mo) {
         if (mo.y > this.y + this.height) {
             this.isHigher = true;
@@ -57,7 +66,10 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
+    /**
+     * applies gravity when the character starts jumping
+     * when the character smashed an enemy the character hop a little
+     */
     applyGravity() {
         setInterval(() => {
             if (!this.isDead()) {
@@ -66,12 +78,10 @@ class MovableObject extends DrawableObject {
                     this.jumpgImgPosition = 0;
                     this.speedY = this.jumpHeight;
                 }
-
                 if (this.isInAir() || this.speedY < 0) {
                     this.y += this.speedY;
                     this.speedY += this.acceleration;
                 }
-
                 if (this.jumpSmash) {
                     this.jumpgImgPosition = 0;
                     this.speedY = this.jumpHeight / 2;
@@ -80,50 +90,100 @@ class MovableObject extends DrawableObject {
             }
         }, 1000 / 25);
     }
+
+    /**
+     * checks if the objects energy is under or equal zero
+     * @returns boolean
+     */
     isDead() {
         return this.energy < 1;
     }
 
+    /**
+     * checks if the object is in air
+     * @returns boolean
+     */
     isInAir() {
         return this.y < this.ground;
     }
 
+    /**
+     * checks whether an object has been hit. in the case of an instance of character,
+     * the function characterHitted is called. otherwise bossHitted is called
+     */
     hit() {
         if (this instanceof Character) {
             if (!this.isHitted()) {
-                sounds.playCharacterHurt();
-                this.energy -= 15;
-                this.setLastHit();
+                this.characterHitted();
             }
         } else {
-            this.energy -= 20;
-            if (this.energy > 0) {
-                sounds.playBossHit();
-            } else if (!this.playedSound) {
-                sounds.playBossDead();
-                this.playedSound = true;
-            }
+            this.bossHitted();
         };
     }
 
+    /**
+     * when character is hitted this function calls a sounds function
+     * and decrease characters energy
+     */
+    characterHitted() {
+        sounds.playCharacterHurt();
+        this.energy -= 15;
+        this.setLastHit();
+    }
+
+    /**
+     * when boss is hitted this function calls a sounds function
+     * and decrease boss energy
+     * if boss energy is under zero playing dead sounds
+     */
+    bossHitted() {
+        this.energy -= 20;
+        if (this.energy > 0) {
+            sounds.playBossHit();
+        } else if (!this.playedSound) {
+            sounds.playBossDead();
+            this.playedSound = true;
+        }
+    }
+
+    /**
+     * sets the time of the last hit to a variable
+     */
     setLastHit() {
         this.lastHit = new Date().getTime();
         this.lastHit = this.lastHit / 1000;
     }
 
+    /**
+     * returns true if the last beat was less than a second ago.
+     * as a result, only one second can suffer damage
+     * @returns boolean
+     */
     isHitted() {
         this.timePassed = (new Date().getTime() / 1000) - this.lastHit;
         return this.timePassed < 1;
     }
 
+    /**
+     * lets the object move to left
+     * @param {number} speed 
+     */
     moveLeft(speed) {
         this.x += speed;
     }
 
+    /**
+     * lets the object move to right
+     * @param {number} speed 
+     */
     moveRight(speed) {
         this.x -= speed;
     }
 
+    /**
+     * set the colling parameter of an object.
+     * required if a picture is larger than the model within the picture
+     */
     setCollidingParams() {
         setInterval(() => {
             if (this instanceof Character) {
@@ -142,17 +202,7 @@ class MovableObject extends DrawableObject {
                 this.collidingX = this.x;
                 this.collidingwidth = this.width;
             }
-
         }, 1000 / 60);
     }
-
-
-
-
-
-
-
-
-
 
 }

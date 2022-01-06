@@ -186,16 +186,17 @@ class Character extends MovableObject {
      * function to set images when the object is jumping up
      */
     displayJumpUp() {
-            this.img = this.jumpImagesUp[this.jumpImgUpPosition];
-            if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
-                this.jumpImgUpPosition++;
-            } else {
-                this.jumpImgFallPosition = 0;
-            };
-        }
-        /**
-         * function to set images when the object is falling down
-         */
+        this.img = this.jumpImagesUp[this.jumpImgUpPosition];
+        if (this.jumpImgUpPosition < this.jumpImagesUp.length - 1) {
+            this.jumpImgUpPosition++;
+        } else {
+            this.jumpImgFallPosition = 0;
+        };
+    }
+
+    /**
+     * function to set images when the object is falling down
+     */
     displayJumpFall() {
         this.img = this.jumpImagesFall[this.jumpImgFallPosition];
         if (this.y > (this.ground + this.jumpHeight) / 2) {

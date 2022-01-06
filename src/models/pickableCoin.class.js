@@ -12,7 +12,11 @@ class PickableCoin extends MovableObject {
         "src/img/8.Coin/7.png",
     ];
 
-
+    /**
+     * function is called when object is generated
+     * this function sets the main abilities and images and starts 
+     * other different functions 
+     */
     constructor() {
         super();
         this.coinImgs = this.loadImages(this.coinImgsCache);
@@ -24,12 +28,14 @@ class PickableCoin extends MovableObject {
         this.setCollidingParams();
     }
 
+    /**
+     * animates the oppenent with move images
+     */
     animate() {
         setInterval(() => {
             this.img = this.coinImgs[this.imgPosition % this.coinImgs.length];
             this.imgPosition++;
         }, 100);
     }
-
 
 }

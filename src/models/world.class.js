@@ -229,7 +229,6 @@ class World {
     checkCoins() {
         this.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                sounds.pauseCoin();
                 sounds.playCoin();
                 coin.energy = 0;
                 this.character.addCoin();
