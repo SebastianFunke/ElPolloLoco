@@ -366,7 +366,7 @@ class World {
      */
     checkBgMove() {
         setInterval(() => {
-            setAdditionalSpeedZero();
+            this.setAdditionalSpeedZero();
             if (!this.character.isDead()) {
                 if (!this.character.checkBothDirectionKeysPressed()) {
                     if (this.character.rightEnd && keyboard.getPressedKey('right')) {
