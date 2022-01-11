@@ -16,6 +16,7 @@ class MovableObject extends DrawableObject {
     acceleration = 6;
     isJumping = false;
     ground = 850;
+    endReached = false;
     energy;
     timePassed = 0;
     lastHit = 0;
@@ -26,7 +27,6 @@ class MovableObject extends DrawableObject {
     constructor() {
         super();
         this.energy = properties.characterEnergy;
-
     }
 
     /**
@@ -39,7 +39,6 @@ class MovableObject extends DrawableObject {
             this.collidingY + this.collidingheight > mo.collidingY &&
             this.collidingX < mo.collidingX &&
             this.collidingY < mo.collidingY + mo.collidingheight;
-
     }
 
     /**
@@ -119,6 +118,23 @@ class MovableObject extends DrawableObject {
         } else {
             this.bossHitted();
         };
+    }
+
+    /**
+     * function to wait specific milliseconds
+     * @param {number} time in milliseconds
+     * @returns 
+     */
+    delay(time) {
+        return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    /**
+     * sets the variable for end of game to true after a second
+     */
+    async setEndReached() {
+        await this.delay(1000);
+        this.endReached = true;
     }
 
     /**

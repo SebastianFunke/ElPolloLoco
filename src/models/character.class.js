@@ -234,6 +234,7 @@ class Character extends MovableObject {
             this.img = this.deadImages[this.deadImgPosition];
             this.y += this.deadJumpHeight;
             this.deadJumpHeight += 2;
+            this.setEndReached();
             if (this.deadImgPosition < this.deadImages.length - 1) { this.deadImgPosition++ };
         }, 1000 / 25);
     }

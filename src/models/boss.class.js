@@ -102,6 +102,8 @@ class EndBoss extends MovableObject {
         this.img = this.dyingImages[this.deadImgPosition];
         if (this.deadImgPosition < this.dyingImages.length - 1) {
             this.deadImgPosition++;
+        } else {
+            this.setEndReached();
         }
     }
 

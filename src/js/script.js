@@ -10,8 +10,10 @@ function init() {
 
 }
 
-function showCanvas() {
+function startGame() {
+    document.getElementById('welcomeScreen').classList.add('d-none');
     document.getElementById('canvasSection').classList.remove('d-none');
+    document.body.style.background = "black";
     canvas = document.getElementById('canvas');
     world = new World(canvas);
 }

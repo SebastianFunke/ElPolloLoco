@@ -19,6 +19,23 @@
     font-weight: normal;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../img/5.Fondo/1.png');
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 48px !important;
+}
+
 .centerAll {
     display: flex;
     justify-content: center;
@@ -56,6 +73,10 @@ section {
     background-color: black;
 }
 
+.card-img-top {
+    border-radius: 48px !important;
+}
+
 #infoText {
     display: flex;
     justify-content: flex-end;
@@ -89,14 +110,4 @@ section {
     transform: scale(1.5);
     filter: contrast(0.5);
     transition: 225ms ease-in-out;
-}
-
-#welcomeScreen {
-    width: 100vw;
-    height: 100vh;
-}
-
-#welcomeScreen img {
-    width: 100%;
-    object-fit: contain;
 }

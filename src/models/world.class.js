@@ -15,6 +15,7 @@ class World {
     bottles = [];
     bottleThrowed = false;
     pickableBottles = [];
+    gameActive = true;
 
     /**
      * function is called when object is generated
@@ -111,14 +112,63 @@ class World {
      * clear the canvas and call several functions
      */
     main() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawObjects();
-        this.checkColissions();
-        this.checkGenerateBottle();
-        let self = this;
-        requestAnimationFrame(function() {
-            self.main();
-        });
+        if (this.checkCharacterDead() && this.checkBossDead()) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.drawObjects();
+            this.checkColissions();
+            this.checkGenerateBottle();
+            console.log(this.endBoss.endReached);
+            let self = this;
+            requestAnimationFrame(function() {
+                self.main();
+            });
+        } else if (!this.checkCharacterDead()) {
+            this.showLostScreen();
+        } else if (!this.checkBossDead()) {
+            this.showWinScreen();
+        }
+    }
+
+    /**
+     * hides gamecanvas and show win screen
+     */
+    showWinScreen() {
+        document.body.style.background = "url('src/img/5.Fondo/1.png')";
+        document.getElementById('canvasSection').classList.add('d-none');
+        document.getElementById('endScreenWin').classList.remove('d-none');
+    }
+
+    /**
+     * hide gamecanvas and show lost screen
+     */
+    showLostScreen() {
+        document.body.style.background = "url('src/img/5.Fondo/1.png')";
+        document.getElementById('canvasSection').classList.add('d-none');
+        document.getElementById('endScreenLost').classList.remove('d-none');
+    }
+
+    /**
+     * checks if the character is dead and reached the last image position
+     * @returns boolean - returns false when character is dead
+     */
+    checkCharacterDead() {
+        if (this.character.endReached) {
+            return false;
+        } else {
+            return true
+        }
+    }
+
+    /**
+     * checks if the boss is dead and reached the last image position
+     * @returns boolean - returns false when boss is dead
+     */
+    checkBossDead() {
+        if (this.endBoss.endReached) {
+            return false;
+        } else {
+            return true
+        }
     }
 
     /**
