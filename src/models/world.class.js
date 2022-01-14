@@ -117,7 +117,6 @@ class World {
             this.drawObjects();
             this.checkColissions();
             this.checkGenerateBottle();
-            console.log(this.endBoss.endReached);
             let self = this;
             requestAnimationFrame(function() {
                 self.main();
@@ -367,7 +366,12 @@ class World {
                 this.character.hit();
             };
         });
-    }
+
+        if (this.character.isColliding(this.endBoss) && this.endBoss.energy > 0) {
+            this.character.hit();
+        };
+    };
+
 
     /**
      * checks if a throwed bottle hited the boss

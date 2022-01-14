@@ -4,12 +4,8 @@ let sounds = new Sounds();
 let world;
 
 /**
- * initial function called on body onLoad
+ * hides the startscreen and starts the game
  */
-function init() {
-
-}
-
 function startGame() {
     document.getElementById('welcomeScreen').classList.add('d-none');
     document.getElementById('canvasSection').classList.remove('d-none');
@@ -55,5 +51,19 @@ function toggleMute() {
         document.getElementById('btnMute').src = 'src/img/mute.png';
     } else {
         document.getElementById('btnMute').src = 'src/img/volume.png';
+    }
+}
+
+/**
+ * function to show and hide keyboard settings in start screen
+ */
+function showHelp() {
+    document.getElementById('startScreen').classList.toggle('d-none');
+    document.getElementById('helpScreen').classList.toggle('d-none');
+    let btnHelp = document.getElementById('btnHelp');
+    if (btnHelp.innerText == 'Show Help') {
+        btnHelp.innerText = 'Hide Help';
+    } else {
+        btnHelp.innerText = 'Show Help';
     }
 }

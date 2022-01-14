@@ -34,14 +34,13 @@
 
 <!--<body onload="includeHTML()">-->
 
-<body onload="init()">
+<body>
 
     <main>
 
 
         <article>
             <section id="canvasSection" class="d-none">
-                <h1>El Pollo Loco</h1>
                 <canvas id="canvas"></canvas>
                 <div id="infoText">
                     <img class="fullScreenImg" src="src/img/fullscreen.png" onclick="setFullscreen()" alt="">
@@ -52,14 +51,20 @@
             <div id="welcomeScreen" class="card" style="width: 75vw;">
 
                 <section>
-                    <img src="src/img/9.Intro _ Outro Image/Start Screen/Opción 1.png" class="card-img-top" alt="...">
+                    <img id="startScreen" src="src/img/9.Intro _ Outro Image/Start Screen/Opción 1.png" class="card-img-top" alt="...">
+                    <img id="helpScreen" class="keyImg d-none" src="src/img/keys.png" alt="">
                     <div class="card-body">
+
                         <h5 class="card-title">El Pollo Loco</h5>
                         <p class="card-text">Welcome to this small Game.</p>
                         <a href="#" class="btn btn-primary" onclick="startGame()">Start Game</a>
-                        <a href="#" class="btn btn-primary" onclick="startGame()">Help</a>
+                        <a href="#" id="btnHelp" class="btn btn-secondary" onclick="showHelp()">Show Help</a>
+
+
                     </div>
+
                 </section>
+
             </div>
 
             <div id="endScreenLost" class="card d-none" style="width: 75vw;">
@@ -68,7 +73,6 @@
                     <div class="card-body">
                         <h5 class="card-title">You Lost!</h5>
                         <a href="#" class="btn btn-primary" onclick="location.reload();return false;">Restart Game</a>
-                        <a href="#" class="btn btn-primary" onclick="startGame()">Help</a>
                     </div>
                 </section>
             </div>
@@ -79,10 +83,15 @@
                     <div class="card-body">
                         <h5 class="card-title">You Win!!</h5>
                         <a href="#" class="btn btn-primary" onclick="location.reload();return false;">Restart Game</a>
-                        <a href="#" class="btn btn-primary" onclick="startGame()">Help</a>
                     </div>
                 </section>
             </div>
+
+
+
+
+
+
 
         </article>
     </main>

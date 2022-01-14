@@ -45,7 +45,7 @@ class EndBoss extends MovableObject {
         this.alertImages = this.loadImages(this.alertImagesCache);
         this.dyingImages = this.loadImages(this.dyingImagesCache);
         this.hurtImages = this.loadImages(this.hurtImagesCache);
-        this.x = properties.width * 6 + 850;;
+        this.x = properties.width * 6 + 850 + 5000;
         this.y = 700;
         this.height = 900;
         this.width = 900;
