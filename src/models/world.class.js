@@ -29,7 +29,6 @@ class World {
         canvas.height = properties.height * properties.scale;
         canvas.style.width = properties.width + 'px';
         canvas.style.height = properties.height + 'px';
-        this.setInfoText();
         this.setCharacter();
         this.setBackgroundObjects();
         this.setEnemies();
@@ -40,13 +39,6 @@ class World {
         this.setBottles();
         this.main();
         this.checkBgMove();
-    }
-
-    /**
-     * sets the width of the infoText-div
-     */
-    setInfoText() {
-        document.getElementById('infoText').style.width = properties.width + 'px';
     }
 
     /**
@@ -133,8 +125,9 @@ class World {
      */
     showWinScreen() {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
-        document.getElementById('canvasSection').classList.add('d-none');
+        document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenWin').classList.remove('d-none');
+        document.getElementById('infoText').classList.add('d-none')
     }
 
     /**
@@ -142,8 +135,9 @@ class World {
      */
     showLostScreen() {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
-        document.getElementById('canvasSection').classList.add('d-none');
+        document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenLost').classList.remove('d-none');
+        document.getElementById('infoText').classList.add('d-none')
     }
 
     /**
@@ -271,6 +265,7 @@ class World {
      */
     drawStatusBars() {
         this.statusBar.forEach(element => {
+            console.log(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             element.setImg(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
         });
@@ -366,7 +361,6 @@ class World {
                 this.character.hit();
             };
         });
-
         if (this.character.isColliding(this.endBoss) && this.endBoss.energy > 0) {
             this.character.hit();
         };
