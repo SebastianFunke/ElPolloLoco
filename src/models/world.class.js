@@ -110,6 +110,7 @@ class World {
             this.checkColissions();
             this.checkGenerateBottle();
             let self = this;
+
             requestAnimationFrame(function() {
                 self.main();
             });
@@ -120,6 +121,8 @@ class World {
         }
     }
 
+
+
     /**
      * hides gamecanvas and show win screen
      */
@@ -127,7 +130,8 @@ class World {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
         document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenWin').classList.remove('d-none');
-        document.getElementById('infoText').classList.add('d-none')
+        document.getElementById('infoText').classList.add('d-none');
+        sounds.mute = true;
     }
 
     /**
@@ -137,7 +141,8 @@ class World {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
         document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenLost').classList.remove('d-none');
-        document.getElementById('infoText').classList.add('d-none')
+        document.getElementById('infoText').classList.add('d-none');
+        sounds.mute = true;
     }
 
     /**
@@ -265,7 +270,6 @@ class World {
      */
     drawStatusBars() {
         this.statusBar.forEach(element => {
-            console.log(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             element.setImg(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
         });
@@ -316,7 +320,6 @@ class World {
      */
     checkColissions() {
         this.checkEnemiesSmashed();
-        this.checkEnemiesHigher();
         this.checkEnemiesColiding();
         this.checkBottles();
         this.checkCoins();
@@ -330,24 +333,10 @@ class World {
      */
     checkEnemiesSmashed() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isSmashed(enemy) && enemy.energy > 0) {
+            if (this.character.isInAir() && this.character.isColliding(enemy) && enemy.energy > 0) {
                 this.character.jumpSmash = true;
                 enemy.energy = 0;
                 enemy.setDeadImgs();
-            };
-        });
-    }
-
-    /**
-     * if the character if jumping and above an enemie,
-     * the variable isHigher will set to true
-     */
-    checkEnemiesHigher() {
-        this.enemies.forEach((enemy) => {
-            if (this.character.checkHigher(enemy)) {
-                enemy.isHigher = true;
-            } else {
-                enemy.isHigher = false;
             };
         });
     }

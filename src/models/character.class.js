@@ -87,13 +87,7 @@ class Character extends MovableObject {
      */
     constructor(canvasWidth, speed) {
         super().loadImage("src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png")
-        this.moveImages = this.loadImages(this.moveImgCache);
-        this.idleImages = this.loadImages(this.idleImgCache);
-        this.longIdleImages = this.loadImages(this.longIdleImgCache);
-        this.jumpImagesUp = this.loadImages(this.jumpImageUpCache);
-        this.jumpImagesFall = this.loadImages(this.jumpImagesFallCache);
-        this.hurtImages = this.loadImages(this.hurtImagesCache);
-        this.deadImages = this.loadImages(this.deadImagesCache);
+        this.loadAllImages();
         this.canvasWidth = canvasWidth;
         this.x = 320;
         this.y = 250;
@@ -103,6 +97,19 @@ class Character extends MovableObject {
         this.main();
         this.applyGravity();
         this.setCollidingParams();
+    }
+
+    /**
+     * function to load all images into the arrays
+     */
+    loadAllImages() {
+        this.moveImages = this.loadImages(this.moveImgCache);
+        this.idleImages = this.loadImages(this.idleImgCache);
+        this.longIdleImages = this.loadImages(this.longIdleImgCache);
+        this.jumpImagesUp = this.loadImages(this.jumpImageUpCache);
+        this.jumpImagesFall = this.loadImages(this.jumpImagesFallCache);
+        this.hurtImages = this.loadImages(this.hurtImagesCache);
+        this.deadImages = this.loadImages(this.deadImagesCache);
     }
 
     /**
@@ -120,22 +127,20 @@ class Character extends MovableObject {
                     this.hasSmashed = false;
                     this.displayJumpFall();
                 } else {
-                    if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
-                        if (this.checkBothDirectionKeysPressed()) {
-                            this.displayIdle();
-                        } else {
-                            this.displayMove();
-                        }
-                    } else {
-                        this.displayIdle();
-                    }
+                    this.checkBothKeys();
                 }
             } else {
                 this.displayDead();
             }
             this.increaseImgPosition();
         }, 100);
+        this.checkFunctions();
+    }
 
+    /**
+     * function to call several functions which will check several states
+     */
+    checkFunctions() {
         setInterval(() => {
             this.checkCharacterEndRight();
             this.checkCharacterEndLeft();
@@ -143,6 +148,22 @@ class Character extends MovableObject {
             this.checkKeyLeft();
             this.checkResetIdle();
         }, 1000 / 60);
+    }
+
+    /**
+     * function to check if both keys are pressed
+     * if true character images will be setted to idle
+     */
+    checkBothKeys() {
+        if (keyboard.getPressedKey('right') || keyboard.getPressedKey('left')) {
+            if (this.checkBothDirectionKeysPressed()) {
+                this.displayIdle();
+            } else {
+                this.displayMove();
+            }
+        } else {
+            this.displayIdle();
+        }
     }
 
     /**

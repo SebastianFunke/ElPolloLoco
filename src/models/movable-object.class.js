@@ -4,7 +4,6 @@ class MovableObject extends DrawableObject {
     collidingX;
     collidingheight;
     collidingwidth;
-    isHigher = false;
     jumpImgUpPosition = 0;
     jumpImgFallPosition = 0;
     jumpSmash = false;
@@ -39,30 +38,6 @@ class MovableObject extends DrawableObject {
             this.collidingY + this.collidingheight > mo.collidingY &&
             this.collidingX < mo.collidingX &&
             this.collidingY < mo.collidingY + mo.collidingheight;
-    }
-
-    /**
-     * function to check if the object is jumped on another object
-     * @param {object} mo - movable object 
-     * @returns boolean
-     */
-    isSmashed(mo) {
-        return this.isHigher &&
-            this.collidingX + this.collidingwidth > mo.collidingX &&
-            this.collidingX < mo.collidingX + mo.collidingwidth &&
-            this.collidingY + this.collidingheight > mo.y
-    }
-
-    /**
-     * checks if the character is higher as the mo
-     * @param {object} mo - movable object 
-     */
-    checkHigher(mo) {
-        if (mo.y > this.y + this.height) {
-            this.isHigher = true;
-        } else {
-            this.isHigher = false;
-        }
     }
 
     /**

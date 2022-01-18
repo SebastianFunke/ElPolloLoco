@@ -6,6 +6,7 @@
     <title>El Pollo Loco</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="src\css\styles.css">
+    <link rel="icon" href="src/img/icon.png">
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -36,64 +37,38 @@
 
 <body>
     <div class="infoTextBox d-none" id="infoText">
-
         <img class="fullScreenImg" src="src/img/fullscreen.png" onclick="setFullscreen()" alt="">
-        <img id="btnMute " class="fullScreenImg" src="src/img/mute.png" onclick="toggleMute()" alt="">
-
+        <img id="btnMute" class="fullScreenImg" src="src/img/mute.png" onclick="toggleMute()" alt="">
     </div>
 
     <main>
-
         <canvas id="canvas" class="d-none"></canvas>
-
-
-
         <div id="welcomeScreen" class="card" style="width: 75vw;">
-
-
             <img id="startScreen" src="src/img/9.Intro _ Outro Image/Start Screen/Opción 1.png" class="card-img-top" alt="...">
             <img id="helpScreen" class="keyImg d-none" src="src/img/keys.png" alt="">
             <div class="card-body">
-
                 <h5 class="card-title">El Pollo Loco</h5>
                 <p class="card-text">Welcome to this small Game.</p>
                 <a href="#" class="btn btn-primary" onclick="startGame()">Start Game</a>
                 <a href="#" id="btnHelp" class="btn btn-secondary" onclick="showHelp()">Show Help</a>
-
-
             </div>
-
-
-
         </div>
 
         <div id="endScreenLost" class="card d-none" style="width: 75vw;">
-
             <img src="src/img/9.Intro _ Outro Image/_Game over_ screen/2.oh no you lost!.png" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">You Lost!</h5>
                 <a href="#" class="btn btn-primary" onclick="location.reload();return false;">Restart Game</a>
             </div>
-
         </div>
 
         <div id="endScreenWin" class="card d-none" style="width: 75vw;">
-
             <img src="src/img/9.Intro _ Outro Image/_Game over_ screen/3.Game over.png" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">You Win!!</h5>
                 <a href="#" class="btn btn-primary" onclick="location.reload();return false;">Restart Game</a>
             </div>
-
         </div>
-
-
-
-
-
-
-
-        </article>
     </main>
 
     <footer>
