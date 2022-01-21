@@ -10,7 +10,7 @@ class World {
     ctx;
     coins = [];
     canvas;
-    maxSpeed = 8;
+    maxSpeed = properties.maxSpeed;
     speedBgLayerFour = this.maxSpeed / 4;
     bottles = [];
     bottleThrowed = false;
@@ -45,7 +45,8 @@ class World {
      * generate a new character object
      */
     setCharacter() {
-        this.character = new Character(this.canvas.width, this.maxSpeed);
+        this.character = level1.character;
+        this.character[0].startCharacter();
     }
 
     /**
@@ -66,6 +67,9 @@ class World {
      */
     setEnemies() {
         this.enemies = level1.enemies;
+        this.enemies.forEach(enemie => {
+            enemie.startEnemie();
+        })
     }
 
     /**
@@ -79,7 +83,8 @@ class World {
      * generate a new boss object
      */
     setEndBoss() {
-        this.endBoss = new EndBoss();
+        this.endBoss = level1.boss;
+        this.endBoss[0].startBoss();
     }
 
     /**
@@ -110,7 +115,6 @@ class World {
             this.checkColissions();
             this.checkGenerateBottle();
             let self = this;
-
             requestAnimationFrame(function() {
                 self.main();
             });
@@ -128,10 +132,8 @@ class World {
      */
     showWinScreen() {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
-        document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenWin').classList.remove('d-none');
-        document.getElementById('infoText').classList.add('d-none');
-        sounds.mute = true;
+        this.hideCanvas();
     }
 
     /**
@@ -139,10 +141,16 @@ class World {
      */
     showLostScreen() {
         document.body.style.background = "url('src/img/5.Fondo/1.png')";
-        document.getElementById('canvas').classList.add('d-none');
         document.getElementById('endScreenLost').classList.remove('d-none');
+        this.hideCanvas();
+    }
+
+    hideCanvas() {
+        document.getElementById('canvas').classList.add('d-none');
         document.getElementById('infoText').classList.add('d-none');
         sounds.mute = true;
+        sounds.stopBGMusic();
+
     }
 
     /**
@@ -150,7 +158,7 @@ class World {
      * @returns boolean - returns false when character is dead
      */
     checkCharacterDead() {
-        if (this.character.endReached) {
+        if (this.character[0].endReached) {
             return false;
         } else {
             return true
@@ -162,7 +170,7 @@ class World {
      * @returns boolean - returns false when boss is dead
      */
     checkBossDead() {
-        if (this.endBoss.endReached) {
+        if (this.endBoss[0].endReached) {
             return false;
         } else {
             return true
@@ -245,15 +253,15 @@ class World {
      * rotates the picture depending on which direction you are walking
      */
     drawCharacter() {
-        if (!this.character.lookDirection) {
+        if (!this.character[0].lookDirection) {
             this.ctx.save();
-            this.ctx.translate(this.character.width, 0);
+            this.ctx.translate(this.character[0].width, 0);
             this.ctx.scale(-1, 1);
-            this.character.x = this.character.x * -1;
+            this.character[0].x = this.character[0].x * -1;
         }
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-        if (!this.character.lookDirection) {
-            this.character.x = this.character.x * -1;
+        this.ctx.drawImage(this.character[0].img, this.character[0].x, this.character[0].y, this.character[0].width, this.character[0].height);
+        if (!this.character[0].lookDirection) {
+            this.character[0].x = this.character[0].x * -1;
             this.ctx.restore();
         }
     }
@@ -262,7 +270,7 @@ class World {
      * function to draw the endboss
      */
     drawEndBoss() {
-        this.ctx.drawImage(this.endBoss.img, this.endBoss.x, this.endBoss.y, this.endBoss.width, this.endBoss.height);
+        this.ctx.drawImage(this.endBoss[0].img, this.endBoss[0].x, this.endBoss[0].y, this.endBoss[0].width, this.endBoss[0].height);
     }
 
     /**
@@ -270,7 +278,7 @@ class World {
      */
     drawStatusBars() {
         this.statusBar.forEach(element => {
-            element.setImg(this.character.energy, this.character.bottles, this.character.coins, this.endBoss.energy);
+            element.setImg(this.character[0].energy, this.character[0].bottles, this.character[0].coins, this.endBoss[0].energy);
             this.ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
         });
     }
@@ -333,8 +341,8 @@ class World {
      */
     checkEnemiesSmashed() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isInAir() && this.character.isColliding(enemy) && enemy.energy > 0) {
-                this.character.jumpSmash = true;
+            if (this.character[0].isInAir() && this.character[0].isColliding(enemy) && enemy.energy > 0) {
+                this.character[0].jumpSmash = true;
                 enemy.energy = 0;
                 enemy.setDeadImgs();
             };
@@ -346,12 +354,12 @@ class World {
      */
     checkEnemiesColiding() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && enemy.energy > 0) {
-                this.character.hit();
+            if (this.character[0].isColliding(enemy) && enemy.energy > 0) {
+                this.character[0].hit();
             };
         });
-        if (this.character.isColliding(this.endBoss) && this.endBoss.energy > 0) {
-            this.character.hit();
+        if (this.character[0].isColliding(this.endBoss[0]) && this.endBoss[0].energy > 0) {
+            this.character[0].hit();
         };
     };
 
@@ -361,9 +369,9 @@ class World {
      */
     checkBottles() {
         this.bottles.forEach((bottle) => {
-            if (this.endBoss.isColliding(bottle)) {
+            if (this.endBoss[0].isColliding(bottle)) {
                 if (!bottle.hasHitted()) {
-                    this.endBoss.hit();
+                    this.endBoss[0].hit();
                 }
                 bottle.collides();
             };
@@ -376,10 +384,10 @@ class World {
      */
     checkCoins() {
         this.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
+            if (this.character[0].isColliding(coin)) {
                 sounds.playCoin();
                 coin.energy = 0;
-                this.character.addCoin();
+                this.character[0].addCoin();
             }
         });
     }
@@ -390,10 +398,10 @@ class World {
      */
     checkPickableObjects() {
         this.pickableBottles.forEach((pickableBottle) => {
-            if (this.character.isColliding(pickableBottle)) {
+            if (this.character[0].isColliding(pickableBottle)) {
                 sounds.playBottlePick();
                 pickableBottle.energy = 0;
-                this.character.addBottle();
+                this.character[0].addBottle();
             }
         });
     }
@@ -404,12 +412,12 @@ class World {
     checkBgMove() {
         setInterval(() => {
             this.setAdditionalSpeedZero();
-            if (!this.character.isDead()) {
-                if (!this.character.checkBothDirectionKeysPressed()) {
-                    if (this.character.rightEnd && keyboard.getPressedKey('right')) {
+            if (!this.character[0].isDead()) {
+                if (!this.character[0].checkBothDirectionKeysPressed()) {
+                    if (this.character[0].rightEnd && keyboard.getPressedKey('right')) {
                         this.moveCanvasRight();
                     }
-                    if (this.character.leftEnd && keyboard.getPressedKey('left')) {
+                    if (this.character[0].leftEnd && keyboard.getPressedKey('left')) {
                         this.moveCanvasLeft();
                     }
                 }
@@ -433,7 +441,7 @@ class World {
      * when character is walking to right, lets move the background to left
      */
     moveCanvasLeft() {
-        this.endBoss.moveRight();
+        this.endBoss[0].moveRight();
         this.enemies.forEach(enemy => {
             enemy.setAdditionalSpeed(this.maxSpeed * -1);
         });
@@ -455,7 +463,7 @@ class World {
      * when character is walking to left, lets move the background to right
      */
     moveCanvasRight() {
-        this.endBoss.moveLeft();
+        this.endBoss[0].moveLeft();
         this.bottles.forEach(bottle => {
             bottle.setAdditionalSpeed(this.maxSpeed * -1);
         });
@@ -479,10 +487,10 @@ class World {
      */
     checkGenerateBottle() {
         setInterval(() => {
-            if (this.character.bottles > 0) {
+            if (this.character[0].bottles > 0) {
                 if (keyboard.getPressedKey('d') && !this.bottleThrowed) {
-                    this.bottles.push(new ThrowableObject(this.character.x + (this.character.width / 6), this.character.y + (this.character.height / 3), this.character.lookDirection));
-                    this.character.bottles -= 10;
+                    this.bottles.push(new ThrowableObject(this.character[0].x + (this.character[0].width / 6), this.character[0].y + (this.character[0].height / 3), this.character[0].lookDirection));
+                    this.character[0].bottles -= 10;
                     this.bottleThrowed = true;
                 }
                 if (!keyboard.getPressedKey('d') && this.bottleThrowed) {

@@ -3,18 +3,18 @@ class Chicken extends MovableObject {
     moveImages = [];
     dyingImgs = [];
     imgCache = [
-        "src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.png",
-        "src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/2.png",
-        "src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/3.png"
+        "src/img/3.Secuencias_Enemy_basico/Version_Gallinita (estas salen por orden de la gallina gigantona)/1.png",
+        "src/img/3.Secuencias_Enemy_basico/Version_Gallinita (estas salen por orden de la gallina gigantona)/2.png",
+        "src/img/3.Secuencias_Enemy_basico/Version_Gallinita (estas salen por orden de la gallina gigantona)/3.png"
     ];
 
     imgCacheAlternative = [
-        "src/img/3.Secuencias_Enemy_básico/Versión_pollito/1.png",
-        "src/img/3.Secuencias_Enemy_básico/Versión_pollito/2.png",
-        "src/img/3.Secuencias_Enemy_básico/Versión_pollito/3.png",
+        "src/img/3.Secuencias_Enemy_basico/Version_pollito/1.png",
+        "src/img/3.Secuencias_Enemy_basico/Version_pollito/2.png",
+        "src/img/3.Secuencias_Enemy_basico/Version_pollito/3.png",
     ];
-    dyingImgsCache = ["src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/4.png"];
-    dyingImgsCacheAlternative = ["src/img/3.Secuencias_Enemy_básico/Versión_pollito/4.muerte.png"];
+    dyingImgsCache = ["src/img/3.Secuencias_Enemy_basico/Version_Gallinita (estas salen por orden de la gallina gigantona)/4.png"];
+    dyingImgsCacheAlternative = ["src/img/3.Secuencias_Enemy_basico/Version_pollito/4Muerte.png"];
 
     /**
      * function is called when object is generated
@@ -22,7 +22,7 @@ class Chicken extends MovableObject {
      * other different functions 
      */
     constructor() {
-        super().loadImage("src/img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.png")
+        super().loadImage("src/img/3.Secuencias_Enemy_basico/Version_Gallinita (estas salen por orden de la gallina gigantona)/1.png")
         this.canvasWidth = properties.width * properties.scale;
         this.randomizeImg();
         this.speed = 2 + (3 * Math.random());
@@ -30,9 +30,16 @@ class Chicken extends MovableObject {
         this.y = 1350;
         this.height = 200;
         this.width = 200;
+        this.setCollidingParams();
+
+    }
+
+    /**
+     * function to start enemie
+     */
+    startEnemie() {
         this.move();
         this.animate();
-        this.setCollidingParams();
     }
 
     /**

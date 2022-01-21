@@ -11,6 +11,7 @@ class Sounds {
     characterSleep = new Audio('src/sounds/sleep.mp3');
     bossHit = new Audio('src/sounds/boss_hit.mp3');
     bossDead = new Audio('src/sounds/boss_dead.mp3');
+    bgMusic = new Audio('src/sounds/bgmusic.mp3');
     constructor() {
 
     }
@@ -38,6 +39,16 @@ class Sounds {
         this.walking.pause();
     }
 
+    playBGMusic() {
+        if (!this.checkMute()) {
+            this.bgMusic.volume = 0.3;
+            this.bgMusic.play();
+        }
+    }
+
+    stopBGMusic() {
+        this.bgMusic.pause();
+    }
     playWalking() {
         this.play(this.walking);
     }

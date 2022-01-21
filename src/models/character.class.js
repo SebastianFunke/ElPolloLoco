@@ -16,65 +16,65 @@ class Character extends MovableObject {
     hurtImages = [];
     deadImages = [];
     moveImgCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-22.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-23.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-24.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-25.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-26.png"
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-21.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-22.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-23.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-24.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-25.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/2.Secuencia_caminata/W-26.png"
 
     ];
     idleImgCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-2.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-3.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-4.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-5.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-6.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-7.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-8.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-9.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-10.png"
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-1.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-2.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-3.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-4.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-5.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-6.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-7.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-8.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-9.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-10.png"
     ];
     longIdleImgCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-11.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-12.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-13.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-14.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-15.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-16.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-17.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-18.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-19.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-20.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-11.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-12.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-13.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-14.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-15.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-16.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-17.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-18.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-19.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/LONG_IDLE/I-20.png",
 
     ];
     jumpImageUpCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-31.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-32.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-33.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-34.png"
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-31.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-32.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-33.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-34.png"
     ];
     jumpImagesFallCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-35.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-36.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-37.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-38.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/3.Secuencia_salto/j-39.png"
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-35.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-36.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-37.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-38.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/3.Secuencia_salto/J-39.png"
     ];
     hurtImagesCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-41.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-42.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-43.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/4.Herido/H-41.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/4.Herido/H-42.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/4.Herido/H-43.png",
 
     ];
     deadImagesCache = [
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-51.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-52.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-53.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-54.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-55.png",
-        "src/img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-56.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-51.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-52.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-53.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-54.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-55.png",
+        "src/img/2.Secuencias_Personaje-Pepe-correccion/5.Muerte/D-56.png",
 
     ];
 
@@ -85,23 +85,26 @@ class Character extends MovableObject {
      * @param {number} canvasWidth - the width of the canvas
      * @param {number} speed - the standard speed of this object
      */
-    constructor(canvasWidth, speed) {
-        super().loadImage("src/img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png")
+    constructor() {
+        super().loadImage("src/img/2.Secuencias_Personaje-Pepe-correccion/1.IDLE/IDLE/I-1.png")
         this.loadAllImages();
-        this.canvasWidth = canvasWidth;
+        this.canvasWidth = properties.width;
         this.x = 320;
         this.y = 250;
         this.height = 700;
         this.width = 350;
-        this.speed = speed;
-        this.main();
-        this.applyGravity();
-        this.setCollidingParams();
+        this.speed = properties.maxSpeed;
+
     }
 
-    /**
-     * function to load all images into the arrays
-     */
+    startCharacter() {
+            this.main();
+            this.applyGravity();
+            this.setCollidingParams();
+        }
+        /**
+         * function to load all images into the arrays
+         */
     loadAllImages() {
         this.moveImages = this.loadImages(this.moveImgCache);
         this.idleImages = this.loadImages(this.idleImgCache);
@@ -309,7 +312,7 @@ class Character extends MovableObject {
      * checks whether the object has reached the right edge
      */
     checkCharacterEndRight() {
-        if (this.x > this.canvasWidth / 3) {
+        if (this.x > this.canvasWidth) {
             this.rightEnd = true;
         } else {
             this.rightEnd = false;

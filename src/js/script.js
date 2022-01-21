@@ -48,6 +48,7 @@ function setFullscreen() {
  */
 function toggleMute() {
     sounds.mute = !sounds.mute;
+    sounds.playBGMusic();
     if (sounds.mute) {
         document.getElementById('btnMute').src = 'src/img/mute.png';
     } else {

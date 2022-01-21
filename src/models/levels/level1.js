@@ -13,6 +13,7 @@ const level1 = new Level([
         new Chicken(),
         new Chicken(),
         new Chicken(),
+        new Chicken(),
         new Chicken()
     ], [
         new PickableCoin(),
@@ -30,6 +31,10 @@ const level1 = new Level([
         new PickableBottle(),
         new PickableBottle(),
         new PickableBottle()
+    ], [
+        new Character()
+    ], [
+        new EndBoss()
     ]
 
 );

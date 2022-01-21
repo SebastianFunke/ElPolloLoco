@@ -7,31 +7,31 @@ class EndBoss extends MovableObject {
     moveImages = [];
     hurtImages = [];
     moveImagesCache = [
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G2.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G3.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G4.png"
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/1.Caminata/G1.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/1.Caminata/G2.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/1.Caminata/G3.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/1.Caminata/G4.png"
     ];
     alertImagesCache = [
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G13.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G14.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G15.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G16.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G17.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G18.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G19.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G20.png"
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G13.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G14.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G15.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G16.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G17.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G18.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G19.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/2.Atecion-ataque/2.Ataque/G20.png"
     ];
     dyingImagesCache = [
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G24.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G25.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/4.Muerte/G24.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/4.Muerte/G25.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/4.Muerte/G26.png",
     ];
 
     hurtImagesCache = [
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G21.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G22.png",
-        "src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G23.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/3.Herida/G21.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/3.Herida/G22.png",
+        "src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/3.Herida/G23.png",
     ];
 
     /**
@@ -40,7 +40,7 @@ class EndBoss extends MovableObject {
      * other different functions 
      */
     constructor() {
-        super().loadImage("src/img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png")
+        super().loadImage("src/img/4.Secuencias_Enemy_giganton-Dona_Gallinota-/1.Caminata/G1.png")
         this.moveImages = this.loadImages(this.moveImagesCache);
         this.alertImages = this.loadImages(this.alertImagesCache);
         this.dyingImages = this.loadImages(this.dyingImagesCache);
@@ -50,8 +50,11 @@ class EndBoss extends MovableObject {
         this.height = 900;
         this.width = 900;
         this.speed = properties.maxSpeed / 5;
-        this.main();
         this.energy = 50;
+    }
+
+    startBoss() {
+        this.main();
         this.setCollidingParams();
     }
 
