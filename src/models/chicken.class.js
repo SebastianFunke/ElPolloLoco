@@ -38,7 +38,7 @@ class Chicken extends MovableObject {
      * function to start enemie
      */
     startEnemie() {
-        this.move();
+        // this.move();
         this.animate();
     }
 

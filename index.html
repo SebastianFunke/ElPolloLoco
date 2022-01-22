@@ -37,12 +37,21 @@
 
 <body>
     <div class="infoTextBox d-none" id="infoText">
-        <img class="fullScreenImg" src="src/img/fullscreen.png" onclick="setFullscreen()" alt="">
-        <img id="btnMute" class="fullScreenImg" src="src/img/mute.png" onclick="toggleMute()" alt="">
-    </div>
+        <div class="topBox">
+            <img class="fullScreenImg" src="src/img/fullscreen.png" onclick="setFullscreen()" alt="">
+            <img id="btnMute" class="fullScreenImg" src="src/img/mute.png" onclick="toggleMute()" alt="">
+        </div>
 
+        <div id="btnBox" class="d-none">
+            <button id="btnLeft" onmousedown="keyboard.setKeyPressed({'key':'ArrowLeft'})" onmouseup="keyboard.setKeyLeaved({'key':'ArrowLeft'})" ontouchstart="keyboard.setKeyPressed({'key':'ArrowLeft'})" ontouchend="keyboard.setKeyLeaved({'key':'ArrowLeft'})"></button>
+            <button id="btnThrow" onmousedown="keyboard.setKeyPressed({'key':'d'})" onmouseup="keyboard.setKeyLeaved({'key':'d'})" ontouchstart="keyboard.setKeyPressed({'key':'d'})" ontouchend="keyboard.setKeyLeaved({'key':'d'})"></button>
+            <button id="btnJump" onmousedown="keyboard.setKeyPressed({'key':' '})" onmouseup="keyboard.setKeyLeaved({'key':' '})" ontouchstart="keyboard.setKeyPressed({'key':' '})" ontouchend="keyboard.setKeyLeaved({'key':' '})"></button>
+            <button id="btnRight" onmousedown="keyboard.setKeyPressed({'key':'ArrowRight'})" onmouseup="keyboard.setKeyLeaved({'key':'ArrowRight'})" ontouchstart="keyboard.setKeyPressed({'key':'ArrowRight'})" ontouchend="keyboard.setKeyLeaved({'key':'ArrowRight'})"></button></div>
+
+    </div>
     <main>
         <canvas id="canvas" class="d-none"></canvas>
+
         <div id="welcomeScreen" class="card" style="width: 75vw;">
             <img id="startScreen" src="src/img/9.Intro _ Outro Image/Start Screen/Opción 1.png" class="card-img-top" alt="...">
             <img id="helpScreen" class="keyImg d-none" src="src/img/keys.png" alt="">
